@@ -1,0 +1,63 @@
+# sudo: false
+
+language: 
+ - cpp
+
+compiler:
+  - gcc
+
+os: linux
+
+dist: trusty
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+
+# Change this to your needs
+# script: ./configure &amp;&amp; make
+
+before_install:
+  - pip install --user cpp-coveralls
+
+before_script: 
+  - cd cpp_project/compile-skills/scons-demo/
+
+script: 
+#scons-demo
+  - scons
+  - ./hello
+#gtest-demo
+  - cd ../../gtest-demo/
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
+after_script:
+  - ./unit_tests
+
+after_success:
+  - coveralls --root .. -E ".*external.*" -E ".*CMakeFiles.*" -E ".*test/.*.cpp.*"
+
+before_deploy: "echo 'ready?'"
+
+deploy:
+  provider: releases
+  api_key: System.getenv("key")
+  file: "../../scons-demo/hello"
+  skip_cleanup: true
+  on:
+    tags: true
+
+
+branches:
+  only:
+    - master
+
+notifications:
+  recipients:
+    - mikosong2013@gmail.com
+  email:
+    on_success: never
+    on_failure: change
