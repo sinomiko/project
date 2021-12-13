@@ -22,10 +22,3 @@ int getMedia(int* a, int* b, int alen,int blen, int start, int end)
 	
 	return getMedia(a, b, alen, blen, start, p-1);
 }
-
-int main()
-{
-    trail();
-    getchar();
-    return 0;
-}

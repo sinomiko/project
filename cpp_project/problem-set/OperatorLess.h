@@ -33,7 +33,7 @@ private:
 	int m_b;
 };
 
-int main()
+int TestCompare()
 {
 	MyType ma(1, 2);
 	const MyType mb(2, 1);
