@@ -313,26 +313,20 @@ public:
     //https://leetcode.com/problems/trim-a-binary-search-tree/description/
     struct TreeNode* trimBST(struct TreeNode* root, int L, int R) {
         bool notFound = 0;
-        if (root)
-        {
-            if (root->val < L) {
-                root = root->right;
-                notFound = 1;
-            }
-            else if (root->val > R) {
-                root = root->left;
-                notFound = 1;
-            }
-
-            if (notFound) {
-                root = trimBST(root, L, R);
-            }
-
-            if (root) {
-                root->left = trimBST(root->left, L, R);
-                root->right = trimBST(root->right, L, R);
-            }
+        if (root == nullptr) {
+            return root;
         }
+        
+        if (root->val < L) {
+            return trimBST(root->right, L, R);
+        }
+        if (root->val > R) {
+            return trimBST(root->left, L, R);
+        }
+
+        root->left = trimBST(root->left, L, R);
+        root->right = trimBST(root->right, L, R);
+
         return root;
     }
 
@@ -409,6 +403,31 @@ public:
         }
         return ret;
     }
+    //leetcode-6 Z 字形变换
+    string convert_6(string s, int numRows) {
+        if (numRows == 1) return s;
+
+        vector<vector<char>> lines(numRows > s.size() ? s.size() : numRows, vector<char>());
+        string ret;
+        bool goingDown = false;
+        int idx = 0;
+        for (size_t i = 0; i < s.length(); i++)
+        {
+            lines[idx].push_back(s[i]);
+            if (idx == numRows -1 || idx == 0) {
+                goingDown = !goingDown;
+            }
+            idx += goingDown ? 1 : -1;
+        }
+        for (size_t i = 0; i < lines.size(); i++)
+        {
+            for (int j = 0; j < lines[i].size(); j++)
+            {
+                ret.push_back(lines[i][j]);
+            }
+        }
+        return ret;
+    }
 
     //12. 带最小值操作的栈
     //https://www.lintcode.com/zh-cn/problem/min-stack/
@@ -457,6 +476,199 @@ public:
         vector<int> mins;
     };
 
+    //offer 40
+    vector<int> getLeastNumbers(vector<int>& arr, int k) {
+        vector<int> res(k, 0);
+        if (k == 0) {
+            return res;
+        }
+        priority_queue<int, vector<int>, std::less<int>> big_heap;
+        for(int i: arr) {
+            if(big_heap.empty() || big_heap.size() < k || i < big_heap.top()) {
+                big_heap.push(i);
+            }
+
+            if (big_heap.size() > k) {
+                big_heap.pop();
+            }
+        }
+        while (!big_heap.empty())
+        {
+            res.push_back(big_heap.top());
+            big_heap.pop();
+        }
+
+        return res;
+
+    }
+
+    /*
+    * @lc app=leetcode.cn id=9 lang=cpp
+    *
+    * [9] 回文数
+    */
+    bool isPalindrome(int x) {
+        if (x < 0)
+        {
+            return false;
+        }
+        
+        int len = 1;
+        for (len = 1; x /len >= 10; len*=10);
+        while (x > 0)
+        {
+            int left = x / len;
+            int right = x % 10;
+            if (left != right)
+            {
+                return false;
+            }
+            x = (x%len) / 10;
+            len /= 100;
+        }
+        return true;
+    }
+
+    /*
+    * @lc app=leetcode.cn id=13 lang=cpp
+    *
+    * [13] 罗马数字转整数
+    */
+    int romanToInt(string s) {
+        int ret = 0;
+        for (size_t i = 0; i < s.size();)
+        {
+            switch (s[i])
+            {
+            case 'I': 
+                if (i +1 < s.size() && s[i + 1] == 'V') {
+                    ret += 4;
+                    i += 2;
+                    break;
+                }
+                if (i +1 < s.size() && s[i + 1] == 'X') {
+                    ret += 9;
+                    i += 2;
+                    break;
+                }
+                ret += 1;
+                i++;
+                break;
+            case 'V':
+                ret += 5;
+                i++;
+                break;
+            case 'X':
+                if (i +1 < s.size() && s[i + 1] == 'L') {
+                    ret += 40;
+                    i += 2;
+                    break;
+                }
+                if (i +1 < s.size() && s[i + 1] == 'C') {
+                    ret += 90;
+                    i += 2;
+                    break;
+                }
+                ret += 10;
+                i++;
+                break;
+            case 'L':
+                ret += 50;
+                i++;
+                break;
+            case 'C':
+                if (i +1 < s.size() && s[i + 1] == 'D') {
+                    ret += 400;
+                    i += 2;
+                    break;
+                }
+                if (i +1 < s.size() && s[i + 1] == 'M') {
+                    ret += 900;
+                    i += 2;
+                    break;
+                }
+                ret += 100;
+                i++;
+                break;
+            case 'D':
+                ret += 500;
+                i++;
+                break;
+            case 'M':
+                ret += 1000;
+                i++;
+                break;
+            default:
+                i++;
+                break;
+            }
+            
+        }
+        return ret;
+
+    }
+
+    /*
+    * @lc app=leetcode.cn id=14 lang=cpp
+    *
+    * [14] 最长公共前缀
+    */
+    string longestCommonPrefix(vector<string>& strs) {
+        int shortest_len = 300;
+        std::string shortest_str;
+        for (auto& str: strs)
+        {
+            if (str.length() < shortest_len) {
+                shortest_len = str.length();
+                shortest_str = str;
+            }
+        }
+        int longest_prefix = 0;
+        bool from_start = true;
+        for (size_t i = 0; i < shortest_len; i++)
+        {
+            bool str_is_same = true;
+            for (auto& str: strs)
+            {
+                if (str[i] != shortest_str[i])
+                {
+                    str_is_same = false;
+                    break;
+                }
+            }
+            if (from_start && str_is_same)
+            {
+                longest_prefix++;
+            } else {
+                from_start = false;
+            }
+        }
+        return shortest_str.substr(0, longest_prefix);
+        
+    }
+    /*
+    * @lc app=leetcode.cn id=27 lang=cpp
+    *
+    * [27] 移除元素
+    */
+    int removeElement(vector<int>& nums, int val) {
+        int new_idx = 0;
+        if (nums.empty())
+        {
+            return 0;
+        }
+
+        for (size_t i = 0; i < nums.size(); i++)
+        {
+           if (nums[i] != val) {
+               new_idx++;
+               nums[new_idx] = nums[i];
+           }
+        }
+        return new_idx;
+        
+        
+    }
     //463. Island Perimeter
     //https://leetcode.com/problems/island-perimeter/description/
     int islandPerimeter(vector<vector<int>>& grid) {

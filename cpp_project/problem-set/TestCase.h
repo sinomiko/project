@@ -6,6 +6,7 @@
 #define PROBLEM_SET_TESTCASE_H
 #include "Solution.h"
 
+using namespace std;
 namespace TestCase {
     void testPSQuickSort() {
         Solution ps;
@@ -27,6 +28,7 @@ namespace TestCase {
         }
 
     }
+   
     void islandPerimeterUT(){
         Solution ps;
         vector<vector<int>> input{ {0, 1, 0, 0},{1, 1, 1, 0},{0, 1, 0, 0 },{1, 1, 0, 0} };
@@ -44,12 +46,39 @@ namespace TestCase {
         ms.push(1);
         cout << ms.min() << endl;
     }
+    void zStringTransUT(){
+        Solution ps;
+        string caseStr = "abc";
+        auto ret = ps.convert_6(caseStr, 1);
+        cout << ret << endl;
+    }
 
     void longestConsecutiveUT(){
         Solution ps;
         vector<int> test{ 9,1,-3,2,4,8,3,-1,6,-2,-4,7 };
         int ret = ps.longestConsecutive(test);
         cout << ret << endl;
+    }
+
+    void getLeastNumbersUT() {
+        Solution ps;
+        vector<int> t2{3,2,1 };
+
+        vector<int> ret = ps.getLeastNumbers(t2, 2);
+        for (auto& it : ret)
+        {
+            cout << it <<"\t";
+        }
+        
+    }
+
+    void romanToIntUT() {
+        Solution ps;
+        cout << "III" << "\t" << "3" << "\t" << ps.romanToInt("III") << std::endl;
+        cout << "IV" << "\t" << "4" << "\t" << ps.romanToInt("IV") << std::endl;
+        cout << "IX" << "\t" << "9" << "\t" << ps.romanToInt("IX") << std::endl;
+        cout << "LVIII" << "\t" << "58" << "\t" << ps.romanToInt("LVIII") << std::endl;
+        cout << "MCMXCIV" << "\t" << "1994" << "\t" << ps.romanToInt("MCMXCIV") << std::endl;
     }
 
     void nextGreaterElementUT(){
@@ -86,6 +115,18 @@ namespace TestCase {
             for (auto& it : tmp)
             {
                 cout << it << endl;
+            }
+        }
+        );
+    }
+       void longestCommonPrefixUT(){
+        Solution ps;
+        vector<vector<string>> input = { {"flower","flow","flight"},
+        {"dog","racecar","car"} };
+        for_each(input.begin(), input.end(), [&ps](vector<string>& tmp){
+            auto res = ps.longestCommonPrefix(tmp);
+            {
+                cout << res << endl;
             }
         }
         );

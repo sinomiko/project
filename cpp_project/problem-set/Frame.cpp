@@ -3,32 +3,32 @@ using namespace std;
 
 /*
 
-k¸öÒ»×é·­×ªÁ´±í
+kä¸ªä¸€ç»„ç¿»è½¬é“¾è¡¨
 topK
-¹ÉÆ±ÎÊÌâ
-ºÏ²¢ÓÐÐòÁ´±í
-k¸öÓÐÐòÊý×éµÄºÏ²¢
-³öÏÖ´ÎÊý×î¸ßµÄn¸öµ¥´Ê
-ÊÖËºLRU
-ÈýÊýÖ®ºÍ
-¶þ²æÊ÷±éÀú
-¼¯ºÏµÄËùÓÐ×Ó¼¯
-ÅÅÐòËã·¨
-±³°üÎÊÌâ
-È«ÅÅÁÐ
-KMPËã·¨
-¶þ·Ö²éÕÒ
+è‚¡ç¥¨é—®é¢˜
+åˆå¹¶æœ‰åºé“¾è¡¨
+kä¸ªæœ‰åºæ•°ç»„çš„åˆå¹¶
+å‡ºçŽ°æ¬¡æ•°æœ€é«˜çš„nä¸ªå•è¯
+æ‰‹æ’•LRU
+ä¸‰æ•°ä¹‹å’Œ
+äºŒå‰æ ‘éåŽ†
+é›†åˆçš„æ‰€æœ‰å­é›†
+æŽ’åºç®—æ³•
+èƒŒåŒ…é—®é¢˜
+å…¨æŽ’åˆ—
+KMPç®—æ³•
+äºŒåˆ†æŸ¥æ‰¾
 
-Çø¼äDP,Ê÷×´DP,DAGÉÏµÄDP,ÊýÎ»DP,²åÍ·DP,¼ÆÊýDP,¶¯Ì¬DP,¸ÅÂÊDP,ST±í,
-Ê÷×´Êý×é,Ïß¶ÎÊ÷,µ¥µ÷¶ÓÁÐ,Î»ÔËËã,¿ìËÙÃÝ,ÖÃ»»Èº,
-Å£¶Ùµü´ú,¸ß¾«¶È¼ÆËã,×éºÏÊýÑ§,×îÐ¡Éú³ÉÊ÷,
-×î¶ÌÂ·¾¶,Å·À­»ØÂ·,Í¼×ÅÉ«,ÇóÍ¹°ü,Ë«ÏòËÑË÷£¬µü´ú¼ÓÉî¶ÈËÑË÷
+åŒºé—´DP,æ ‘çŠ¶DP,DAGä¸Šçš„DP,æ•°ä½DP,æ’å¤´DP,è®¡æ•°DP,åŠ¨æ€DP,æ¦‚çŽ‡DP,STè¡¨,
+æ ‘çŠ¶æ•°ç»„,çº¿æ®µæ ‘,å•è°ƒé˜Ÿåˆ—,ä½è¿ç®—,å¿«é€Ÿå¹‚,ç½®æ¢ç¾¤,
+ç‰›é¡¿è¿­ä»£,é«˜ç²¾åº¦è®¡ç®—,ç»„åˆæ•°å­¦,æœ€å°ç”Ÿæˆæ ‘,
+æœ€çŸ­è·¯å¾„,æ¬§æ‹‰å›žè·¯,å›¾ç€è‰²,æ±‚å‡¸åŒ…,åŒå‘æœç´¢ï¼Œè¿­ä»£åŠ æ·±åº¦æœç´¢
 */
 
 int main(int argc, char* argv[]) {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */
 
-    TestCase::testPSQuickSort();
+    TestCase::longestCommonPrefixUT();
 
     return 0;
 }

@@ -484,3 +484,12 @@ crashlytics-build.properties
 *.suo
 *.ipch
 *.opensdf
+
+.vscode/
+cpp_project/problem-set/.vscode/
+cpp_project/problem-set/CMakeCache.txt
+cpp_project/problem-set/CMakeFiles/
+cpp_project/problem-set/Frame
+cpp_project/problem-set/Makefile
+cpp_project/problem-set/cmake_install.cmake
+cpp_project/problem-set/problem_set

@@ -9,7 +9,8 @@
 #include <charconv>
 #include <sstream>
 #include <stdio.h>
-
+#include <algorithm>
+#include <queue>
 class ScopedTimer {
 public:
     ScopedTimer(const char* name)
@@ -104,6 +105,35 @@ void Quick_Sort(std::vector<int>& arr, int begin, int end) {
     arr[i] = tmp;
     Quick_Sort(arr, begin, i-1);
     Quick_Sort(arr, i+1, end);
+}
+
+void QuickSort(std::vector<int>& arr, int begin, int end) {
+    if (begin > end)
+    {
+        return;
+    }
+    int l = begin, r = end, idx = l;
+    int tmp = arr[l];
+    while (l < r)
+    {
+        while (r > l && arr[r] >= tmp)
+        {
+            r--;
+        }
+        while (l < r && arr[l] <= tmp) {
+            l++;
+        }
+        if(l < r) {
+            std::swap(arr[l], arr[r]);
+        }
+    }
+    arr[begin] = arr[l];
+    arr[l] = tmp;
+    QuickSort(arr, begin, l -1);
+    QuickSort(arr, l + 1, end);
+}
+void topK() {
+    std::priority_queue<int, std::vector<int>, std::greater<int>> p_queue;
 }
 
 int testQuickSort() {
