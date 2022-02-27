@@ -7,6 +7,7 @@
 #include "Solution.h"
 
 using namespace std;
+
 namespace TestCase {
     void testPSQuickSort() {
         Solution ps;
@@ -130,6 +131,68 @@ namespace TestCase {
             }
         }
         );
+    }
+    void plusOneUT(){
+        Solution ps;
+        vector<vector<int>> input = { 
+        //     {1,2,3},
+        // {9},
+        {8,9,9,9} };
+        for_each(input.begin(), input.end(), [&ps](vector<int>& tmp){
+            auto res = ps.plusOne(tmp);
+            {
+                for (auto& it : res)
+                {
+                    cout << it << "\t";
+                }
+                cout  << endl;
+
+            }
+        }
+        );
+    }
+    void addBinaryUT(){
+        Solution ps;
+        vector<vector<string>> input = { 
+
+        {"11","1"},
+        {"1010","1011"},
+        };
+        for_each(input.begin(), input.end(), [&ps](vector<string>& tmp){
+            auto res = ps.addBinary(tmp[0], tmp[1]);
+            {
+                cout << res << endl;
+             
+            }
+            }
+        );
+    }
+    void mySqrtUT(){
+        Solution ps;
+        vector<int> input = {4, 8};
+        for_each(input.begin(), input.end(), [&ps](int tmp){
+            auto res = ps.mySqrt(tmp);
+            cout << tmp << "\t" << res << endl;
+            }
+        );
+    }
+    void mergeUT(){
+        Solution ps;
+        vector<vector<int>> input = { 
+        // {1,2,3,0,0,0},
+        // {2,5,6},
+        {2,0},
+        {1}
+        };
+        
+        ps.merge(input[0], 1, input[1], 1);
+        for (size_t i = 0; i < input.size(); i++)
+        {
+            cout << input[0][i] << "\t";
+        }
+        cout << endl;
+            
+        
     }
     void vecIterUT(){
         vector<int> input = { 1,2,3,4,5,6 };

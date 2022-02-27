@@ -28,7 +28,7 @@ KMP算法
 int main(int argc, char* argv[]) {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */
 
-    TestCase::longestCommonPrefixUT();
+    TestCase::mergeUT();
 
     return 0;
 }

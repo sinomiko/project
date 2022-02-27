@@ -30,49 +30,26 @@
 
 using namespace std;
 
+//Definition for singly-linked list.
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+// Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
 class Solution {
 public:
-    //771. Jewels and Stones
-    //https://leetcode.com/problems/jewels-and-stones/description/
-    int numJewelsInStones(string J, string S) {
-        set<char> JewelsSet;
-        for (auto j : J)
-            JewelsSet.insert(j);
-        int num = 0;
-        for (auto s : S)
-        {
-            if (JewelsSet.find(s) != JewelsSet.end())
-            {
-                num++;
-            }
-
-        }
-        return num;
-    }
-
-    //804. Unique Morse Code Words
-    //https://leetcode.com/problems/unique-morse-code-words/description/
-    int uniqueMorseRepresentations(vector<string>& words) {
-        vector<string> morseVect = { ".-","-...","-.-.","-..",".","..-.","--.",
-                                     "....","..",".---","-.-",".-..","--","-.",
-                                     "---",".--.","--.-",".-.","...","-","..-",
-                                     "...-",".--","-..-","-.--","--.." };
-        set<string> morseSet;
-        for (auto& str : words)
-        {
-            string morseStr;
-            for (auto i : str)
-            {
-                morseStr += morseVect[i - 'a'];
-            }
-            if (!morseStr.empty())
-            {
-                morseSet.insert(morseStr);
-            }
-        }
-        return morseSet.size();
-    }
-
+    
     //461. Hamming Distance
     //https://leetcode.com/problems/hamming-distance/description/
     int hammingDistance(int x, int y) {
@@ -122,12 +99,6 @@ public:
     /**
     * Definition for a binary tree node.
     */
-    struct TreeNode {
-        int val;
-        TreeNode *left;
-        TreeNode *right;
-        TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-    };
     TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {
         if (t1 == nullptr)
             return t2;
@@ -669,6 +640,315 @@ public:
         
         
     }
+    /*
+    * @lc app=leetcode.cn id=58 lang=cpp
+    *
+    * [58] 最后一个单词的长度
+    */
+    int lengthOfLastWord(string s) {
+        int len = 0;
+        int last_len = 0;
+        for (size_t i = 0; i < s.length(); i++)
+        {
+            if (s[i] == ' ') {
+                if (len > 0) {
+                    last_len = len;
+                }
+                len = 0;
+            } else {
+                len++;
+            }
+        }
+        if (len > 0) {
+            last_len = len;
+        }
+        return last_len;
+    }
+    /*
+    * @lc app=leetcode.cn id=66 lang=cpp
+    *
+    * [66] 加一
+    */
+    vector<int> plusOne(vector<int>& digits) {
+        list<int> ret;
+        int cur = 1;
+        for (int i = digits.size() - 1; i >= 0; i--)
+        {
+            if (i == digits.size() - 1) {
+                if(digits[i] == 9) {
+                    ret.push_front(0);
+                    cur = 1;
+                } else {
+                    ret.push_front(digits[i] + 1);
+                    cur = 0;
+                }
+            } else {
+                if(digits[i] == 9 && cur > 0) {
+                    ret.push_front(0);
+                    cur = 1;
+                } else {
+                    ret.push_front(digits[i] + cur);
+                    cur = 0;
+                }
+            }
+        }
+        if (cur > 0) {
+            ret.push_front(cur);
+        }
+        vector<int> res;
+        std::for_each(ret.begin(), ret.end(), [&res](int x){ 
+            res.push_back(x);
+            });
+        return res;
+    
+
+    }
+
+    /*
+    * @lc app=leetcode.cn id=67 lang=cpp
+    *
+    * [67] 二进制求和
+    */
+    string addBinary(string a, string b) {
+        if (a.empty()) return b;
+        if (b.empty()) return a;
+        string ret;
+        int alen = a.length() - 1;
+        int blen = b.length() - 1;
+        int add = 0;
+        //  a   b   add
+        //  0   0   0   0
+        //  0   0   1   1
+        //  0   1   0   1
+        //  0   1   1   0
+        //  1   0   0   1
+        //  1   0   1   0
+        //  1   1   0   0
+        //  1   1   1   1
+  
+        while (alen >= 0 || blen >= 0 || add)
+        {
+            int x = alen >= 0 ? a[alen] - '0' : 0;
+            int y = blen >= 0 ? b[blen] - '0' : 0;
+            int sum = x + y + add;
+            add = sum / 2;
+            ret += to_string(sum % 2);
+            --alen;
+            --blen;
+        }
+
+        std::reverse(ret.begin(), ret.end());
+        return ret;
+    }
+    /*
+    * @lc app=leetcode.cn id=69 lang=cpp
+    *
+    * [69] x 的平方根 
+    */
+     //69 给定一个非负整数，求它的开方，向下取整。
+    int mySqrt(int x) {
+        if (x == 0) {
+            return 0;
+        }
+        int l = 0, r = x, mid = l + (r - l) / 2, sqr = 0;
+        while (l <= r) {
+            mid = l + (r - l) / 2;
+            sqr = x / mid;
+            if (sqr == mid) {
+                return mid;
+            } else if (sqr < mid) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+
+        }
+        return 0;
+    }
+    /*
+    * @lc app=leetcode.cn id=70 lang=cpp
+    *
+    * [70] 爬楼梯
+    */
+    int climbStairs(int n) {
+        if (n <= 2) return n;
+        int an = 0, a1 = 1, a2 =2;
+        for (size_t i = 3; i <= n; i++)
+        {
+            an = a1 + a2;
+            a1 = a2;
+            a2 = an;
+        }
+        
+        return an;
+    }
+
+    /*
+    * @lc app=leetcode.cn id=83 lang=cpp
+    *
+    * [83] 删除排序链表中的重复元素
+    */
+    ListNode* deleteDuplicates(ListNode* head) {
+        if (head == nullptr || head->next == nullptr)
+        {
+            return head;
+        }
+
+        head->next = deleteDuplicates(head->next);
+
+        if (head->val == head->next->val) head = head->next;
+        return head;
+
+    }
+
+    /*
+    * @lc app=leetcode.cn id=88 lang=cpp
+    *
+    * [88] 合并两个有序数组
+    */
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        if (m == 0) {
+            nums1 = nums2;
+            return;
+        }
+        if (n == 0) {
+            return;
+        }
+        int cur_idx = nums1.size() - 1;
+        int i = m - 1;
+        int j = n -1;
+        while (i >= 0 || j >= 0)
+        {
+            if(j >= 0) {
+                if (i >= 0 && nums1[i] <= nums2[j]) {
+                    nums1[cur_idx--] = nums2[j--];
+                } else if (i < 0) {
+                    nums1[cur_idx--] = nums2[j--];
+                } else {
+                    nums1[cur_idx--] = nums1[i--];
+                }
+            } else {
+                nums1[cur_idx--] = nums1[i--];
+            }
+        }
+    }
+
+    /*
+    * @lc app=leetcode.cn id=94 lang=cpp
+    *
+    * [94] 二叉树的中序遍历
+    */
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ret;
+        inorderTraversal(root, ret);
+        return ret;
+
+    }
+    void inorderTraversal(TreeNode* root, vector<int>& ret) {
+        if (root == nullptr) {
+            return;
+        }
+        if (root->left) {
+            inorderTraversal(root->left, ret);
+        }
+        ret.push_back(root->val);
+        if (root->right) {
+            inorderTraversal(root->right, ret);
+        }
+        
+    }
+
+    /*
+    * @lc app=leetcode.cn id=101 lang=cpp
+    *
+    * [101] 对称二叉树
+    */
+    bool isMirror(TreeNode* p, TreeNode* q) {
+        if (p && !q) {
+            return false;
+        } else if (!p && q) {
+            return false;
+        } else if (!p && !q) {
+            return true;
+        }
+        if (p->val != q->val) {
+            return false;
+        } else {
+            return isMirror(p->left, q->right) && isMirror(p->right, q->left);
+        }
+    }
+    bool isSymmetric(TreeNode* root) {
+        return isMirror(root, root);
+    }
+
+    /*
+    * @lc app=leetcode.cn id=108 lang=cpp
+    *
+    * [108] 将有序数组转换为二叉搜索树
+    */
+    TreeNode* sortedArrayToBstDFS(vector<int>& nums, int l, int r) {
+        if (r < l) {
+            return nullptr;
+        }
+        int mid = l + (r- l) / 2;
+        TreeNode* root = new TreeNode(nums[mid]);
+        root->left = sortedArrayToBstDFS(nums, l, mid - 1);
+        root->right = sortedArrayToBstDFS(nums, mid + 1, r);
+        return root;
+    } 
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        return sortedArrayToBstDFS(nums, 0, nums.size() -1);
+    }
+
+    /*
+    * @lc app=leetcode.cn id=110 lang=cpp
+    *
+    * [110] 平衡二叉树
+    */
+    int levelBst(TreeNode* root) {
+        if (root == nullptr) {
+            return 0;
+        }
+        int l = levelBst(root->left);
+        int r = levelBst(root->right);
+        return max(l, r) + 1;
+    }
+    bool isBalanced(TreeNode* root) {
+        if (root == nullptr) {
+            return true;
+        }
+        return abs(levelBst(root->left) - levelBst(root->right)) > 1 ?
+            false : isBalanced(root->left) && isBalanced(root->right);
+    }
+
+    /*
+    * @lc app=leetcode.cn id=111 lang=cpp
+    *
+    * [111] 二叉树的最小深度
+    */
+    int minDepth(TreeNode* root) {
+        if(root == nullptr) return 0;
+        int l = minDepth(root->left);
+        int r = minDepth(root->right);
+        return (l&&r) ? 
+        1 + std::min(l, r) :
+        1 + l + r;
+    }
+
+    /*
+    * @lc app=leetcode.cn id=112 lang=cpp
+    *
+    * [112] 路径总和
+    */
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if (root == nullptr) return false;
+        if (!root->left && !root->right) {
+            return targetSum - root->val == 0;
+        }
+        return hasPathSum(root->left, targetSum - root->val) ||
+        hasPathSum(root->right, targetSum - root->val);
+
+    }
     //463. Island Perimeter
     //https://leetcode.com/problems/island-perimeter/description/
     int islandPerimeter(vector<vector<int>>& grid) {
@@ -981,25 +1261,7 @@ public:
         );
         return res;
     }
-    //69 给定一个非负整数，求它的开方，向下取整。
-    int MinSquare(int a) {
-        if (a == 0) {
-            return 0;
-        }
-        int l = 0, r = a, mid = l + (r - l) / 2, sqr = 0;
-        while (l <= r) {
-            mid = l + (r - l) / 2;
-            sqr = a / mid;
-            if (sqr == mid) {
-                return mid;
-            } else if (sqr < mid) {
-                r = mid - 1;
-            } else {
-                l = mid + 1;
-            }
-
-        }
-    }
+   
 
     void quick_sort(vector<int>& vec, int l, int r) {
         if (l > r) {
@@ -1097,6 +1359,47 @@ namespace ListNameSpace {
         return head;
 
     }
+    //771. Jewels and Stones
+    //https://leetcode.com/problems/jewels-and-stones/description/
+    int numJewelsInStones(string J, string S) {
+        set<char> JewelsSet;
+        for (auto j : J)
+            JewelsSet.insert(j);
+        int num = 0;
+        for (auto s : S)
+        {
+            if (JewelsSet.find(s) != JewelsSet.end())
+            {
+                num++;
+            }
+
+        }
+        return num;
+    }
+
+    //804. Unique Morse Code Words
+    //https://leetcode.com/problems/unique-morse-code-words/description/
+    int uniqueMorseRepresentations(vector<string>& words) {
+        vector<string> morseVect = { ".-","-...","-.-.","-..",".","..-.","--.",
+                                     "....","..",".---","-.-",".-..","--","-.",
+                                     "---",".--.","--.-",".-.","...","-","..-",
+                                     "...-",".--","-..-","-.--","--.." };
+        set<string> morseSet;
+        for (auto& str : words)
+        {
+            string morseStr;
+            for (auto i : str)
+            {
+                morseStr += morseVect[i - 'a'];
+            }
+            if (!morseStr.empty())
+            {
+                morseSet.insert(morseStr);
+            }
+        }
+        return morseSet.size();
+    }
+
 }
 
 #include<stdio.h> //printf()
