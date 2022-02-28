@@ -18,6 +18,7 @@ k个有序数组的合并
 全排列
 KMP算法
 二分查找
+最长递增子序列
 
 区间DP,树状DP,DAG上的DP,数位DP,插头DP,计数DP,动态DP,概率DP,ST表,
 树状数组,线段树,单调队列,位运算,快速幂,置换群,
@@ -28,7 +29,7 @@ KMP算法
 int main(int argc, char* argv[]) {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */
 
-    TestCase::isPalindromeUT();
+    TestCase::mylengthOfLIS();
 
     return 0;
 }

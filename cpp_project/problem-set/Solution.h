@@ -49,333 +49,20 @@ struct TreeNode {
 
 class Solution {
 public:
-    
-    //461. Hamming Distance
-    //https://leetcode.com/problems/hamming-distance/description/
-    int hammingDistance(int x, int y) {
-        int dist = 0;
-        unsigned  val = x ^ y;
-
-        // Count the number of bits set
-        while (val != 0)
-        {
-            // A bit is set, so increment the count and clear the bit
-            dist++;
-            val &= val - 1;
-        }
-
-        // Return the number of differing bits
-        return dist;
-    }
-
-    //657. Judge Route Circle
-    //https://leetcode.com/submissions/detail/151706850/
-    bool judgeCircle(string moves) {
-        int left = 0, right = 0, up = 0, down = 0;
-        for (auto i : moves)
-        {
-            switch (i) {
-                case 'L':
-                    left++;
-                    break;
-                    case 'R':
-                        right++;
-                        break;
-                        case 'U':
-                            up++;
-                            break;
-                            case 'D':
-                                down++;
-                                break;
-                                default:
-                                    break;
-            }
-        }
-        return (left == right) && (up == down);
-    }
-
-    //617. Merge Two Binary Trees
-    //https://leetcode.com/problems/merge-two-binary-trees/description/
-    /**
-    * Definition for a binary tree node.
-    */
-    TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {
-        if (t1 == nullptr)
-            return t2;
-        else if (t2 == nullptr)
-            return t1;
-        t1->val += t2->val;
-        t1->left = mergeTrees(t1->left, t2->left);
-        t1->right = mergeTrees(t1->right, t2->right);
-        return t1;
-    }
 
     /*
-    88. Lowest Common Ancestor of a Binary Tree
-    https://www.lintcode.com/zh-cn/problem/lowest-common-ancestor-of-a-binary-tree/
-    * @param root: The root of the binary search tree.
-    * @param A: A TreeNode in a Binary.
-    * @param B: A TreeNode in a Binary.
-    * @return: Return the least common ancestor(LCA) of the two nodes.
+    * @lc app=leetcode.cn id=5 lang=cpp
+    *
+    * [5] 最长回文子串
     */
-    TreeNode *dfs(TreeNode * root, TreeNode * A, TreeNode * B) {
-        if ((root == NULL) || (root == A) || (root == B))
-        {
-            return root;
-        }
-        TreeNode *left = dfs(root->left, A, B);
-        TreeNode *right = dfs(root->right, A, B);
-        if ((left!=NULL)&&(right!=NULL))
-        {
-            return root;
-        }
-        else {
-            return left==NULL ? right : left;
-        }
-    }
-    TreeNode * lowestCommonAncestor(TreeNode * root, TreeNode * A, TreeNode * B) {
-        // write your code here
-        return dfs(root, A, B);
-    }
-
-    //728. Self Dividing Numbers
-    //https://leetcode.com/problems/self-dividing-numbers/description/
-    vector<int> selfDividingNumbers(int left, int right) {
-        vector<int> selfDividingNumbersVec;
-        for (int i = left; i <= right; i++)
-        {
-            int dec = i;
-            int res = 0;
-            bool selfDividing = false;
-            while (res = (dec % 10))
-            {
-                if (i%res != 0)
-                {
-                    selfDividing = false;
-                    break;
-                }
-                selfDividing = true;
-                dec = dec / 10;
-            }
-            if (selfDividing && dec == 0)
-                selfDividingNumbersVec.push_back(i);
-        }
-        return selfDividingNumbersVec;
-    }
-
-    //561. Array Partition I
-    //https://leetcode.com/problems/array-partition-i/description/
-    int arrayPairSum(vector<int>& nums) {
-        int sum = 0;
-        std::sort(nums.begin(), nums.end());
-        for (int i = 0; i < nums.size() - 1; i += 2)
-            sum += nums[i];
-        return sum;
-    }
-
-    //811. Subdomain Visit Count
-    //https://leetcode.com/problems/subdomain-visit-count/description/
-    vector<string> subdomainVisits(vector<string>& cpdomains) {
-        unordered_map<string, int> m;
-        for (const auto& str : cpdomains)
-        {
-            int i = str.find(" ");
-            int num = stoi(str.substr(0, i));
-            string domain = str.substr(i + 1, str.size() - i - 1);
-            for (int n = domain.size() - 1; n >= 0; n--)
-            {
-                if (domain[n] == '.') m[domain.substr(n + 1, domain.size() - n - 1)] += num;
-                else if (n == 0) m[domain] += num;
-            }
-
-        }
-        vector<string> v;
-        for (const auto& e : m) v.push_back(to_string(e.second) + " " + e.first);
-        return v;
-    }
-
-    //821. Shortest Distance to a Character
-    //https://leetcode.com/problems/shortest-distance-to-a-character/description/
-    int nearestIndex(string S, char C, int index) {
-        int left = index, right = index;
-        if (S[index] == C) return index;
-        while (left >= 0 || right < S.size())
-        {
-            if (left >= 0 && S[left] == C) { return left; }
-            if (right < S.size() && S[right] == C) { return right; }
-            left--;
-            right++;
-        }
-        return -1;
-    }
-
-    vector<int> shortestToChar(string S, char C) {
-        vector<int> ret;
-        for (int i = 0; i < S.size(); i++)
-        {
-            int index = nearestIndex(S, C, i);
-            ret.push_back(abs(i - index));
-        }
-        return ret;
-    }
-
-    //476. Number Complement
-    //https://leetcode.com/problems/number-complement/description/
-    int findComplement(int num) {
-        unsigned int mask = ~0;
-        while (num & mask) mask <<= 1;
-        return  ~num&~mask;
-
-    }
-
-    //344. Reverse String
-    //https://leetcode.com/problems/reverse-string/description/
-    string reverseString(string s) {
-        int index = 0;
-        int len = s.size();
-        while (index < len / 2) {
-            std::swap(s[index], s[len - 1 - index]);
-            index++;
-        }
-        return s;
-    }
-
-    //557. Reverse Words in a String III
-    //https://leetcode.com/problems/reverse-words-in-a-string-iii/description/
-    string reverseWords(string s) {
-        size_t front = 0;
-        for (int i = 0; i <= s.length(); ++i) {
-            if (i == s.length() || s[i] == ' ') {
-                reverse(&s[front], &s[i]);
-                front = i + 1;
-            }
-        }
-
-        return s;
-    }
-
-    //500. Keyboard Row
-    //https://leetcode.com/problems/keyboard-row/description/
-    vector<string> findWords(vector<string>& words) {
-        vector<string> ret;
-        vector<string> TabVect{ "QWERTYUIOPqwertyuiop","ASDFGHJKLasdfghjkl","ZXCVBNMzxcvbnm" };
-        for (int index = 0; index < TabVect.size(); index++)
-        {
-            for (auto& items : words)
-            {
-                int count = 0;
-                for (auto ch : items)
-                {
-                    if (TabVect[index].find(ch) != std::string::npos)
-                    {
-                        count++;
-                    }
-                }
-                if (count == items.size())
-                {
-                    ret.push_back(items);
-                }
-            }
-        }
-        return ret;
-    }
-
-    //669. Trim a Binary Search Tree
-    //https://leetcode.com/problems/trim-a-binary-search-tree/description/
-    struct TreeNode* trimBST(struct TreeNode* root, int L, int R) {
-        bool notFound = 0;
-        if (root == nullptr) {
-            return root;
+    string lc5_longestPalindrome(string s) {
+        if (s.size() <= 1) {
+            return "";
         }
         
-        if (root->val < L) {
-            return trimBST(root->right, L, R);
-        }
-        if (root->val > R) {
-            return trimBST(root->left, L, R);
-        }
-
-        root->left = trimBST(root->left, L, R);
-        root->right = trimBST(root->right, L, R);
-
-        return root;
-    }
-
-    //682. Baseball Game
-    //https://leetcode.com/problems/baseball-game/description/
-    int calPoints(vector<string>& ops) {
-        stack<int> scoreValidStack;
-        int score = 0;
-        for (auto& it : ops) {
-            if (it == "C")
-            {
-                score -= scoreValidStack.top();
-                scoreValidStack.pop();
-            }
-            else if (it == "D")
-            {
-                score += 2 * scoreValidStack.top();
-                scoreValidStack.push(2 * scoreValidStack.top());
-            }
-            else if (it == "+")
-            {
-                int first = scoreValidStack.top();
-                scoreValidStack.pop();
-                int second = scoreValidStack.top();
-                scoreValidStack.pop();
-                int addScore = first + second;
-                scoreValidStack.push(second);
-                scoreValidStack.push(first);
-                scoreValidStack.push(addScore);
-                score += addScore;
-            }
-            else {
-                int getScore = stoi(it);
-                score += getScore;
-                scoreValidStack.push(getScore);
-            }
-        }
-
-        return score;
-    }
-
-    //575. Distribute Candies
-    //https://leetcode.com/problems/distribute-candies/description/
-    int distributeCandies(vector<int>& candies) {
-        unordered_set<int> kinds;
-        for (int kind : candies) {
-            kinds.insert(kind);
-        }
-        return min(kinds.size(), candies.size() / 2);
-    }
-
-    //412. Fizz Buzz
-    //https://leetcode.com/problems/fizz-buzz/description/
-    vector<string> fizzBuzz(int n) {
-        vector<string> ret;
-        for (int index = 1; index <= n; index++)
-        {
-            if ((index % 3 == 0) && (index % 5 == 0))
-            {
-                ret.push_back("FizzBuzz");
-            }
-            else if (index % 3 == 0)
-            {
-                ret.push_back("Fizz");
-            }
-            else if (index % 5 == 0)
-            {
-                ret.push_back("Buzz");
-            }
-            else
-            {
-                ret.push_back(std::to_string(index));
-            }
-        }
-        return ret;
     }
     //leetcode-6 Z 字形变换
-    string convert_6(string s, int numRows) {
+    string lc6_convert_6(string s, int numRows) {
         if (numRows == 1) return s;
 
         vector<vector<char>> lines(numRows > s.size() ? s.size() : numRows, vector<char>());
@@ -400,6 +87,58 @@ public:
         return ret;
     }
 
+    //offer 40
+    vector<int> lc40_getLeastNumbers(vector<int>& arr, int k) {
+        vector<int> res(k, 0);
+        if (k == 0) {
+            return res;
+        }
+        priority_queue<int, vector<int>, std::less<int>> big_heap;
+        for(int i: arr) {
+            if(big_heap.empty() || big_heap.size() < k || i < big_heap.top()) {
+                big_heap.push(i);
+            }
+
+            if (big_heap.size() > k) {
+                big_heap.pop();
+            }
+        }
+        while (!big_heap.empty())
+        {
+            res.push_back(big_heap.top());
+            big_heap.pop();
+        }
+
+        return res;
+
+    }
+
+    /*
+    * @lc app=leetcode.cn id=9 lang=cpp
+    *
+    * [9] 回文数
+    */
+    bool lc9_isPalindrome(int x) {
+        if (x < 0)
+        {
+            return false;
+        }
+        
+        int len = 1;
+        for (len = 1; x /len >= 10; len*=10);
+        while (x > 0)
+        {
+            int left = x / len;
+            int right = x % 10;
+            if (left != right)
+            {
+                return false;
+            }
+            x = (x%len) / 10;
+            len /= 100;
+        }
+        return true;
+    }
     //12. 带最小值操作的栈
     //https://www.lintcode.com/zh-cn/problem/min-stack/
     class MinStack {
@@ -447,65 +186,12 @@ public:
         vector<int> mins;
     };
 
-    //offer 40
-    vector<int> getLeastNumbers(vector<int>& arr, int k) {
-        vector<int> res(k, 0);
-        if (k == 0) {
-            return res;
-        }
-        priority_queue<int, vector<int>, std::less<int>> big_heap;
-        for(int i: arr) {
-            if(big_heap.empty() || big_heap.size() < k || i < big_heap.top()) {
-                big_heap.push(i);
-            }
-
-            if (big_heap.size() > k) {
-                big_heap.pop();
-            }
-        }
-        while (!big_heap.empty())
-        {
-            res.push_back(big_heap.top());
-            big_heap.pop();
-        }
-
-        return res;
-
-    }
-
-    /*
-    * @lc app=leetcode.cn id=9 lang=cpp
-    *
-    * [9] 回文数
-    */
-    bool isPalindrome(int x) {
-        if (x < 0)
-        {
-            return false;
-        }
-        
-        int len = 1;
-        for (len = 1; x /len >= 10; len*=10);
-        while (x > 0)
-        {
-            int left = x / len;
-            int right = x % 10;
-            if (left != right)
-            {
-                return false;
-            }
-            x = (x%len) / 10;
-            len /= 100;
-        }
-        return true;
-    }
-
     /*
     * @lc app=leetcode.cn id=13 lang=cpp
     *
     * [13] 罗马数字转整数
     */
-    int romanToInt(string s) {
+    int lc13_romanToInt(string s) {
         int ret = 0;
         for (size_t i = 0; i < s.size();)
         {
@@ -584,7 +270,7 @@ public:
     *
     * [14] 最长公共前缀
     */
-    string longestCommonPrefix(vector<string>& strs) {
+    string lc14_longestCommonPrefix(vector<string>& strs) {
         int shortest_len = 300;
         std::string shortest_str;
         for (auto& str: strs)
@@ -622,7 +308,7 @@ public:
     *
     * [27] 移除元素
     */
-    int removeElement(vector<int>& nums, int val) {
+    int lc27_removeElement(vector<int>& nums, int val) {
         int new_idx = 0;
         if (nums.empty())
         {
@@ -645,7 +331,7 @@ public:
     *
     * [58] 最后一个单词的长度
     */
-    int lengthOfLastWord(string s) {
+    int lc58_lengthOfLastWord(string s) {
         int len = 0;
         int last_len = 0;
         for (size_t i = 0; i < s.length(); i++)
@@ -669,7 +355,7 @@ public:
     *
     * [66] 加一
     */
-    vector<int> plusOne(vector<int>& digits) {
+    vector<int> lc66_plusOne(vector<int>& digits) {
         list<int> ret;
         int cur = 1;
         for (int i = digits.size() - 1; i >= 0; i--)
@@ -709,7 +395,7 @@ public:
     *
     * [67] 二进制求和
     */
-    string addBinary(string a, string b) {
+    string lc67_addBinary(string a, string b) {
         if (a.empty()) return b;
         if (b.empty()) return a;
         string ret;
@@ -746,7 +432,7 @@ public:
     * [69] x 的平方根 
     */
      //69 给定一个非负整数，求它的开方，向下取整。
-    int mySqrt(int x) {
+    int lc69_mySqrt(int x) {
         if (x == 0) {
             return 0;
         }
@@ -770,7 +456,7 @@ public:
     *
     * [70] 爬楼梯
     */
-    int climbStairs(int n) {
+    int lc70_climbStairs(int n) {
         if (n <= 2) return n;
         int an = 0, a1 = 1, a2 =2;
         for (size_t i = 3; i <= n; i++)
@@ -788,13 +474,13 @@ public:
     *
     * [83] 删除排序链表中的重复元素
     */
-    ListNode* deleteDuplicates(ListNode* head) {
+    ListNode* lc83_deleteDuplicates(ListNode* head) {
         if (head == nullptr || head->next == nullptr)
         {
             return head;
         }
 
-        head->next = deleteDuplicates(head->next);
+        head->next = lc83_deleteDuplicates(head->next);
 
         if (head->val == head->next->val) head = head->next;
         return head;
@@ -806,7 +492,7 @@ public:
     *
     * [88] 合并两个有序数组
     */
-    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+    void lc88_merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
         if (m == 0) {
             nums1 = nums2;
             return;
@@ -832,13 +518,40 @@ public:
             }
         }
     }
+    /*
+    88. Lowest Common Ancestor of a Binary Tree
+    https://www.lintcode.com/zh-cn/problem/lowest-common-ancestor-of-a-binary-tree/
+    * @param root: The root of the binary search tree.
+    * @param A: A TreeNode in a Binary.
+    * @param B: A TreeNode in a Binary.
+    * @return: Return the least common ancestor(LCA) of the two nodes.
+    */
+    TreeNode *lc88_dfs(TreeNode * root, TreeNode * A, TreeNode * B) {
+        if ((root == NULL) || (root == A) || (root == B))
+        {
+            return root;
+        }
+        TreeNode *left = lc88_dfs(root->left, A, B);
+        TreeNode *right = lc88_dfs(root->right, A, B);
+        if ((left!=NULL)&&(right!=NULL))
+        {
+            return root;
+        }
+        else {
+            return left==NULL ? right : left;
+        }
+    }
+    TreeNode * lc88_lowestCommonAncestor(TreeNode * root, TreeNode * A, TreeNode * B) {
+        // write your code here
+        return lc88_dfs(root, A, B);
+    }
 
     /*
     * @lc app=leetcode.cn id=94 lang=cpp
     *
     * [94] 二叉树的中序遍历
     */
-    vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> lc94_inorderTraversal(TreeNode* root) {
         vector<int> ret;
         inorderTraversal(root, ret);
         return ret;
@@ -863,7 +576,7 @@ public:
     *
     * [101] 对称二叉树
     */
-    bool isMirror(TreeNode* p, TreeNode* q) {
+    bool lc101_isMirror(TreeNode* p, TreeNode* q) {
         if (p && !q) {
             return false;
         } else if (!p && q) {
@@ -874,30 +587,64 @@ public:
         if (p->val != q->val) {
             return false;
         } else {
-            return isMirror(p->left, q->right) && isMirror(p->right, q->left);
+            return lc101_isMirror(p->left, q->right) && lc101_isMirror(p->right, q->left);
         }
     }
     bool isSymmetric(TreeNode* root) {
-        return isMirror(root, root);
+        return lc101_isMirror(root, root);
     }
 
+
+
+    //107. Binary Tree Level Order Traversal II
+    //https://leetcode.com/problems/binary-tree-level-order-traversal-ii/description/
+    int lc107_TreeNodeAtLevel(TreeNode* pRoot, int level, vector<int>& levelContent)
+    {
+        if (!pRoot || level < 0)
+        {
+            return 0;
+        }
+
+        if (level == 0)
+        {
+            levelContent.push_back(pRoot->val);
+            return 1;
+        }
+        return lc107_TreeNodeAtLevel(pRoot->left, level - 1, levelContent) + lc107_TreeNodeAtLevel(pRoot->right, level - 1, levelContent);
+    }
+
+    vector<vector<int>> levelOrderBottom(TreeNode* root) {
+        vector<vector<int>> ret;
+        for (int i; ; i++)
+        {
+            vector<int> levelContent;
+            if (!lc107_TreeNodeAtLevel(root, i, levelContent))
+            {
+                break;
+            }
+            ret.push_back(levelContent);
+        }
+
+        reverse(ret.begin(), ret.end());
+        return ret;
+    }
     /*
     * @lc app=leetcode.cn id=108 lang=cpp
     *
     * [108] 将有序数组转换为二叉搜索树
     */
-    TreeNode* sortedArrayToBstDFS(vector<int>& nums, int l, int r) {
+    TreeNode* lc108_sortedArrayToBstDFS(vector<int>& nums, int l, int r) {
         if (r < l) {
             return nullptr;
         }
         int mid = l + (r- l) / 2;
         TreeNode* root = new TreeNode(nums[mid]);
-        root->left = sortedArrayToBstDFS(nums, l, mid - 1);
-        root->right = sortedArrayToBstDFS(nums, mid + 1, r);
+        root->left = lc108_sortedArrayToBstDFS(nums, l, mid - 1);
+        root->right = lc108_sortedArrayToBstDFS(nums, mid + 1, r);
         return root;
     } 
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-        return sortedArrayToBstDFS(nums, 0, nums.size() -1);
+        return lc108_sortedArrayToBstDFS(nums, 0, nums.size() -1);
     }
 
     /*
@@ -905,20 +652,20 @@ public:
     *
     * [110] 平衡二叉树
     */
-    int levelBst(TreeNode* root) {
+    int lc110_levelBst(TreeNode* root) {
         if (root == nullptr) {
             return 0;
         }
-        int l = levelBst(root->left);
-        int r = levelBst(root->right);
+        int l = lc110_levelBst(root->left);
+        int r = lc110_levelBst(root->right);
         return max(l, r) + 1;
     }
-    bool isBalanced(TreeNode* root) {
+    bool lc110_isBalanced(TreeNode* root) {
         if (root == nullptr) {
             return true;
         }
-        return abs(levelBst(root->left) - levelBst(root->right)) > 1 ?
-            false : isBalanced(root->left) && isBalanced(root->right);
+        return abs(lc110_levelBst(root->left) - lc110_levelBst(root->right)) > 1 ?
+            false : lc110_isBalanced(root->left) && lc110_isBalanced(root->right);
     }
 
     /*
@@ -926,10 +673,10 @@ public:
     *
     * [111] 二叉树的最小深度
     */
-    int minDepth(TreeNode* root) {
+    int lc111_minDepth(TreeNode* root) {
         if(root == nullptr) return 0;
-        int l = minDepth(root->left);
-        int r = minDepth(root->right);
+        int l = lc111_minDepth(root->left);
+        int r = lc111_minDepth(root->right);
         return (l&&r) ? 
         1 + std::min(l, r) :
         1 + l + r;
@@ -940,13 +687,13 @@ public:
     *
     * [112] 路径总和
     */
-    bool hasPathSum(TreeNode* root, int targetSum) {
+    bool lc112_hasPathSum(TreeNode* root, int targetSum) {
         if (root == nullptr) return false;
         if (!root->left && !root->right) {
             return targetSum - root->val == 0;
         }
-        return hasPathSum(root->left, targetSum - root->val) ||
-        hasPathSum(root->right, targetSum - root->val);
+        return lc112_hasPathSum(root->left, targetSum - root->val) ||
+        lc112_hasPathSum(root->right, targetSum - root->val);
 
     }
 
@@ -955,7 +702,7 @@ public:
     *
     * [118] 杨辉三角
     */
-    void generateTriangleDfs(vector<vector<int>>& ret, int level, int numRows) {
+    void lc118_generateTriangleDfs(vector<vector<int>>& ret, int level, int numRows) {
         if (level > numRows) {
             return;
         }
@@ -967,11 +714,11 @@ public:
                 ret[level - 1].push_back(ret[level - 2][i -1] + ret[level - 2][i]);
             }
         }
-        generateTriangleDfs(ret, level+1, numRows);
+        lc118_generateTriangleDfs(ret, level+1, numRows);
     }
-    vector<vector<int>> generate(int numRows) {
+    vector<vector<int>> lc118_generate(int numRows) {
         vector<vector<int>> ret(numRows, vector<int>());
-        generateTriangleDfs(ret, 1, numRows);
+        lc118_generateTriangleDfs(ret, 1, numRows);
         return ret;
     }
 
@@ -980,7 +727,7 @@ public:
     *
     * [121] 买卖股票的最佳时机
     */
-    int maxProfit(vector<int>& prices) {
+    int lc121_maxProfit(vector<int>& prices) {
         if (prices.size() <= 1) return 0;
         int minP = prices[0];
         int maxP = 0;
@@ -993,87 +740,14 @@ public:
         return maxP;
     }
 
-    /*
-    * @lc app=leetcode.cn id=125 lang=cpp
-    *
-    * [125] 验证回文串
-    */
-    bool isPalindrome(string s) {
-        for (int i = 0; i< s.size(); i++) {
-            s[i] = tolower(s[i]);
-        }
-        int r = s.size() - 1;
-        int l = 0;
-        while (l < r)
-        {
-            bool lok = false;
-            if ((s[l] >= '0' && s[l] <= '9') || (s[l] >= 'a' && s[l] <= 'z')) {
-                lok = true;
-            } else {
-                l++;
-                continue;
-            }
-            bool rok = false;
-            if ((s[l] >= '0' && s[l] <= '9') || (s[r] >= 'a' && s[r] <= 'z')) {
-                rok = true;
-            } else {
-                r--;
-                continue;
-            }
-            if (lok && rok) {
-                if (s[l] != s[r]) return false;
-                l++;
-                r--;
-                continue;
-            }
-        }
-        return true;
-    }
-    //463. Island Perimeter
-    //https://leetcode.com/problems/island-perimeter/description/
-    int islandPerimeter(vector<vector<int>>& grid) {
-        int perimeter = 0;
-        int total = 0;
-        for (auto& items : grid)
-        {
-            for (auto& item : items)
-            {
-                if (item == 1)
-                {
-                    total++;
-                }
-            }
-        }
-        total *= 4;
-        int adjecent = 0;
-        for (int i = 0; i < grid.size(); i++)
-        {
-            for (int j = 0; j < grid[0].size(); j++)
-            {
-                if (grid[i][j])
-                {
-                    if ((i - 1 >= 0) && grid[i - 1][j])
-                    {
-                        adjecent++;
-                    }
-                    if ((j - 1 >= 0) && grid[i][j - 1])
-                    {
-                        adjecent++;
-                    }
-                }
-            }
-        }
-        total -= (adjecent * 2);
-        return total;
-    }
-
+   
     /**
     * @param num: A list of integers
     * @return: An integer
     124. 最长连续序列
     https://www.lintcode.com/zh-cn/problem/longest-consecutive-sequence/
     */
-    int longestConsecutive(vector<int> &num) {
+    int lc124_longestConsecutive(vector<int> &num) {
         // write your code here
         set<int> seqSet;
         vector<int> seqVect;
@@ -1113,84 +787,168 @@ public:
         return longest;
     }
 
-    //566. Reshape the Matrix
-    //https://leetcode.com/problems/reshape-the-matrix/description/
-    vector<vector<int>> matrixReshape(vector<vector<int>>& nums, int r, int c) {
-        vector<vector<int>> res(r, vector<int>(c));
-        if (!nums.empty())
+    /*
+    * @lc app=leetcode.cn id=125 lang=cpp
+    *
+    * [125] 验证回文串
+    */
+    bool lc125_isPalindrome(string s) {
+        for (int i = 0; i< s.size(); i++) {
+            s[i] = tolower(s[i]);
+        }
+        int r = s.size() - 1;
+        int l = 0;
+        while (l < r)
         {
-            if (r*c != nums.size() * nums[0].size())
-                return nums;
-
-            int rIndex = 0, cIndex = 0;
-            for (auto& row : nums)
-            {
-                for (auto& item : row)
-                {
-                    res[rIndex][cIndex++] = item;
-                    if (cIndex == c)
-                    {
-                        cIndex = 0;
-                        rIndex++;
-                    }
-                }
+            bool lok = false;
+            if ((s[l] >= '0' && s[l] <= '9') || (s[l] >= 'a' && s[l] <= 'z')) {
+                lok = true;
+            } else {
+                l++;
+                continue;
+            }
+            bool rok = false;
+            if ((s[l] >= '0' && s[l] <= '9') || (s[r] >= 'a' && s[r] <= 'z')) {
+                rok = true;
+            } else {
+                r--;
+                continue;
+            }
+            if (lok && rok) {
+                if (s[l] != s[r]) return false;
+                l++;
+                r--;
+                continue;
             }
         }
-        return res;
+        return true;
     }
 
-    //766. Toeplitz Matrix
-    //https://leetcode.com/problems/toeplitz-matrix/description/
-    bool isToeplitzMatrix(vector<vector<int>>& matrix) {
-        if (!matrix.empty())
-        {
-            //if( matrix.size() != matrix[0].size())
-            //    return false;
-
-            for (int i = 0; i < matrix.size(); i++)
-            {
-                for (int j = 0; j < matrix[0].size(); j++)
-                {
-                    if (i + 1 < matrix.size() && j + 1 < matrix[0].size())
-                    {
-                        if (matrix[i + 1][j + 1] != matrix[i][j]) return false;
-                    }
+    /*
+    * @lc app=leetcode.cn id=300 lang=cpp
+    *
+    * [300] 最长递增子序列
+    */
+    int lc300_lengthOfLIS(vector<int>& nums) {
+        if (nums.size() <= 1) {
+            return nums.size();
+        }
+        int ans = 1;
+        vector<int> dp(nums.size(), 1);
+        for (int i = 1; i< nums.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = max(dp[i], dp[j] + 1);
                 }
             }
-            return true;
+            ans = max(ans, dp[i]);
         }
-        else
-        {
-            return false;
-        }
+        return ans;
     }
 
-    ////766. Toeplitz Matrix
-    //https://leetcode.com/problems/toeplitz-matrix/discuss/113390/C++-1-liner
-    bool isToeplitzMatrix(vector<vector<int>>& m, int i = 0, int j = 0) {
-        return i == m.size() - 1 || j == m[i].size() - 1 || (m[i][j] == m[i + 1][j + 1]
-        && isToeplitzMatrix(m, j < m[i].size() - 2 ? i : i + 1, j < m[i].size() - 2 ? j + 1 : 0));
+    //344. Reverse String
+    //https://leetcode.com/problems/reverse-string/description/
+    string lc344_reverseString(string s) {
+        int index = 0;
+        int len = s.size();
+        while (index < len / 2) {
+            std::swap(s[index], s[len - 1 - index]);
+            index++;
+        }
+        return s;
     }
 
-    //824. Goat Latin
-    //https://leetcode.com/problems/goat-latin/description/
-    string toGoatLatin(string S) {
-        stringstream iss(S), oss;
-        string vowels("aeiouAEIOU"), word, a;
-        while (iss >> word)
+    //412. Fizz Buzz
+    //https://leetcode.com/problems/fizz-buzz/description/
+    vector<string> lc412_fizzBuzz(int n) {
+        vector<string> ret;
+        for (int index = 1; index <= n; index++)
         {
-            a += 'a';
-            if (vowels.find_first_of(word[0]) != string::npos)
-                oss << ' ' << word << "ma" << a;
+            if ((index % 3 == 0) && (index % 5 == 0))
+            {
+                ret.push_back("FizzBuzz");
+            }
+            else if (index % 3 == 0)
+            {
+                ret.push_back("Fizz");
+            }
+            else if (index % 5 == 0)
+            {
+                ret.push_back("Buzz");
+            }
             else
-                oss << ' ' << word.substr(1) << word[0] << "ma" << a;
+            {
+                ret.push_back(std::to_string(index));
+            }
         }
-        return oss.str().substr(1);
+        return ret;
+    }
+    //461. Hamming Distance
+    //https://leetcode.com/problems/hamming-distance/description/
+    int lc461_hammingDistance(int x, int y) {
+        int dist = 0;
+        unsigned  val = x ^ y;
+
+        // Count the number of bits set
+        while (val != 0)
+        {
+            // A bit is set, so increment the count and clear the bit
+            dist++;
+            val &= val - 1;
+        }
+
+        // Return the number of differing bits
+        return dist;
+    }
+    //463. Island Perimeter
+    //https://leetcode.com/problems/island-perimeter/description/
+    int lc463_islandPerimeter(vector<vector<int>>& grid) {
+        int perimeter = 0;
+        int total = 0;
+        for (auto& items : grid)
+        {
+            for (auto& item : items)
+            {
+                if (item == 1)
+                {
+                    total++;
+                }
+            }
+        }
+        total *= 4;
+        int adjecent = 0;
+        for (int i = 0; i < grid.size(); i++)
+        {
+            for (int j = 0; j < grid[0].size(); j++)
+            {
+                if (grid[i][j])
+                {
+                    if ((i - 1 >= 0) && grid[i - 1][j])
+                    {
+                        adjecent++;
+                    }
+                    if ((j - 1 >= 0) && grid[i][j - 1])
+                    {
+                        adjecent++;
+                    }
+                }
+            }
+        }
+        total -= (adjecent * 2);
+        return total;
     }
 
+    //476. Number Complement
+    //https://leetcode.com/problems/number-complement/description/
+    int lc476_findComplement(int num) {
+        unsigned int mask = ~0;
+        while (num & mask) mask <<= 1;
+        return  ~num&~mask;
+
+    }
     //496. Next Greater Element I
     //https://leetcode.com/problems/next-greater-element-i/description/
-    vector<int> nextGreaterElement(vector<int>& findNums, vector<int>& nums) {
+    vector<int> lc496_nextGreaterElement(vector<int>& findNums, vector<int>& nums) {
         vector<int> result(findNums.size());
 
         int tmp = 0;
@@ -1217,9 +975,309 @@ public:
         return result;
     }
 
+    //500. Keyboard Row
+    //https://leetcode.com/problems/keyboard-row/description/
+    vector<string> lc500_findWords(vector<string>& words) {
+        vector<string> ret;
+        vector<string> TabVect{ "QWERTYUIOPqwertyuiop","ASDFGHJKLasdfghjkl","ZXCVBNMzxcvbnm" };
+        for (int index = 0; index < TabVect.size(); index++)
+        {
+            for (auto& items : words)
+            {
+                int count = 0;
+                for (auto ch : items)
+                {
+                    if (TabVect[index].find(ch) != std::string::npos)
+                    {
+                        count++;
+                    }
+                }
+                if (count == items.size())
+                {
+                    ret.push_back(items);
+                }
+            }
+        }
+        return ret;
+    }
+
+    //557. Reverse Words in a String III
+    //https://leetcode.com/problems/reverse-words-in-a-string-iii/description/
+    string lc557_reverseWords(string s) {
+        size_t front = 0;
+        for (int i = 0; i <= s.length(); ++i) {
+            if (i == s.length() || s[i] == ' ') {
+                reverse(&s[front], &s[i]);
+                front = i + 1;
+            }
+        }
+
+        return s;
+    }
+    
+    //561. Array Partition I
+    //https://leetcode.com/problems/array-partition-i/description/
+    int lc561_arrayPairSum(vector<int>& nums) {
+        int sum = 0;
+        std::sort(nums.begin(), nums.end());
+        for (int i = 0; i < nums.size() - 1; i += 2)
+            sum += nums[i];
+        return sum;
+    }
+
+    //566. Reshape the Matrix
+    //https://leetcode.com/problems/reshape-the-matrix/description/
+    vector<vector<int>> lc566_matrixReshape(vector<vector<int>>& nums, int r, int c) {
+        vector<vector<int>> res(r, vector<int>(c));
+        if (!nums.empty())
+        {
+            if (r*c != nums.size() * nums[0].size())
+                return nums;
+
+            int rIndex = 0, cIndex = 0;
+            for (auto& row : nums)
+            {
+                for (auto& item : row)
+                {
+                    res[rIndex][cIndex++] = item;
+                    if (cIndex == c)
+                    {
+                        cIndex = 0;
+                        rIndex++;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    //575. Distribute Candies
+    //https://leetcode.com/problems/distribute-candies/description/
+    int lc575_distributeCandies(vector<int>& candies) {
+        unordered_set<int> kinds;
+        for (int kind : candies) {
+            kinds.insert(kind);
+        }
+        return min(kinds.size(), candies.size() / 2);
+    }
+         
+    //617. Merge Two Binary Trees
+    //https://leetcode.com/problems/merge-two-binary-trees/description/
+    /**
+    * Definition for a binary tree node.
+    */
+    TreeNode* lc617_mergeTrees(TreeNode* t1, TreeNode* t2) {
+        if (t1 == nullptr)
+            return t2;
+        else if (t2 == nullptr)
+            return t1;
+        t1->val += t2->val;
+        t1->left = lc617_mergeTrees(t1->left, t2->left);
+        t1->right = lc617_mergeTrees(t1->right, t2->right);
+        return t1;
+    }
+    
+    //637. Average of Levels in Binary Tree
+    //https://leetcode.com/problems/average-of-levels-in-binary-tree/description/
+    vector<double> averageOfLevels(TreeNode* root) {
+        vector<double> ret;
+        for (int i = 0;; i++)
+        {
+            double avg = 0;
+            int num = 0;
+            if (!lc637_TreeNodeAtLevel(root, i, avg, num))
+            {
+                break;
+            }
+            else {
+                ret.push_back(avg/num);
+            }
+        }
+        return ret;
+    }
+    int lc637_TreeNodeAtLevel(TreeNode* pRoot, int level, double& avg, int& num)
+    {
+        if (!pRoot || level < 0)
+        {
+            return 0;
+        }
+
+        if (level == 0)
+        {
+            num++;
+            avg = (avg + pRoot->val);
+            return 1;
+        }
+        return lc637_TreeNodeAtLevel(pRoot->left, level - 1, avg, num) + lc637_TreeNodeAtLevel(pRoot->right, level - 1, avg, num);
+    }
+
+    //657. Judge Route Circle
+    //https://leetcode.com/submissions/detail/151706850/
+    bool lc657_judgeCircle(string moves) {
+        int left = 0, right = 0, up = 0, down = 0;
+        for (auto i : moves)
+        {
+            switch (i) {
+                case 'L':
+                    left++;
+                    break;
+                    case 'R':
+                        right++;
+                        break;
+                        case 'U':
+                            up++;
+                            break;
+                            case 'D':
+                                down++;
+                                break;
+                                default:
+                                    break;
+            }
+        }
+        return (left == right) && (up == down);
+    }
+
+    //669. Trim a Binary Search Tree
+    //https://leetcode.com/problems/trim-a-binary-search-tree/description/
+    struct TreeNode* lc669_trimBST(struct TreeNode* root, int L, int R) {
+        bool notFound = 0;
+        if (root == nullptr) {
+            return root;
+        }
+        
+        if (root->val < L) {
+            return lc669_trimBST(root->right, L, R);
+        }
+        if (root->val > R) {
+            return lc669_trimBST(root->left, L, R);
+        }
+
+        root->left = lc669_trimBST(root->left, L, R);
+        root->right = lc669_trimBST(root->right, L, R);
+
+        return root;
+    }
+    //682. Baseball Game
+    //https://leetcode.com/problems/baseball-game/description/
+    int lc682_calPoints(vector<string>& ops) {
+        stack<int> scoreValidStack;
+        int score = 0;
+        for (auto& it : ops) {
+            if (it == "C")
+            {
+                score -= scoreValidStack.top();
+                scoreValidStack.pop();
+            }
+            else if (it == "D")
+            {
+                score += 2 * scoreValidStack.top();
+                scoreValidStack.push(2 * scoreValidStack.top());
+            }
+            else if (it == "+")
+            {
+                int first = scoreValidStack.top();
+                scoreValidStack.pop();
+                int second = scoreValidStack.top();
+                scoreValidStack.pop();
+                int addScore = first + second;
+                scoreValidStack.push(second);
+                scoreValidStack.push(first);
+                scoreValidStack.push(addScore);
+                score += addScore;
+            }
+            else {
+                int getScore = stoi(it);
+                score += getScore;
+                scoreValidStack.push(getScore);
+            }
+        }
+
+        return score;
+    }
+
+    //693. Binary Number with Alternating Bits
+    //https://leetcode.com/problems/binary-number-with-alternating-bits/description/
+    bool lc693_hasAlternatingBits(int n) {
+        return !((n - (n >> 2))&(n - (n >> 2) - 1));
+    }
+
+    //728. Self Dividing Numbers
+    //https://leetcode.com/problems/self-dividing-numbers/description/
+    vector<int> lc728_selfDividingNumbers(int left, int right) {
+        vector<int> selfDividingNumbersVec;
+        for (int i = left; i <= right; i++)
+        {
+            int dec = i;
+            int res = 0;
+            bool selfDividing = false;
+            while (res = (dec % 10))
+            {
+                if (i%res != 0)
+                {
+                    selfDividing = false;
+                    break;
+                }
+                selfDividing = true;
+                dec = dec / 10;
+            }
+            if (selfDividing && dec == 0)
+                selfDividingNumbersVec.push_back(i);
+        }
+        return selfDividingNumbersVec;
+    }
+    //766. Toeplitz Matrix
+    //https://leetcode.com/problems/toeplitz-matrix/description/
+    bool lc766_isToeplitzMatrix(vector<vector<int>>& matrix) {
+        if (!matrix.empty())
+        {
+            //if( matrix.size() != matrix[0].size())
+            //    return false;
+
+            for (int i = 0; i < matrix.size(); i++)
+            {
+                for (int j = 0; j < matrix[0].size(); j++)
+                {
+                    if (i + 1 < matrix.size() && j + 1 < matrix[0].size())
+                    {
+                        if (matrix[i + 1][j + 1] != matrix[i][j]) return false;
+                    }
+                }
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    ////766. Toeplitz Matrix
+    //https://leetcode.com/problems/toeplitz-matrix/discuss/113390/C++-1-liner
+    bool lc766_isToeplitzMatrix(vector<vector<int>>& m, int i = 0, int j = 0) {
+        return i == m.size() - 1 || j == m[i].size() - 1 || (m[i][j] == m[i + 1][j + 1]
+        && lc766_isToeplitzMatrix(m, j < m[i].size() - 2 ? i : i + 1, j < m[i].size() - 2 ? j + 1 : 0));
+    }
+
+    //771. Jewels and Stones
+    //https://leetcode.com/problems/jewels-and-stones/description/
+    int lc771_numJewelsInStones(string J, string S) {
+        set<char> JewelsSet;
+        for (auto j : J)
+            JewelsSet.insert(j);
+        int num = 0;
+        for (auto s : S)
+        {
+            if (JewelsSet.find(s) != JewelsSet.end())
+            {
+                num++;
+            }
+
+        }
+        return num;
+    }
     //806. Number of Lines To Write String
     //https://leetcode.com/problems/number-of-lines-to-write-string/description/
-    vector<int> numberOfLines(vector<int>& widths, string S) {
+    vector<int> lc806_numberOfLines(vector<int>& widths, string S) {
         map<char, int> count;
         vector<int> ret;
         int line = 1;
@@ -1245,83 +1303,93 @@ public:
         return ret;
     }
 
-    //637. Average of Levels in Binary Tree
-    //https://leetcode.com/problems/average-of-levels-in-binary-tree/description/
-    int TreeNodeAtLevel(TreeNode* pRoot, int level, double& avg, int& num)
-    {
-        if (!pRoot || level < 0)
+    //824. Goat Latin
+    //https://leetcode.com/problems/goat-latin/description/
+    string lc824_toGoatLatin(string S) {
+        stringstream iss(S), oss;
+        string vowels("aeiouAEIOU"), word, a;
+        while (iss >> word)
         {
-            return 0;
+            a += 'a';
+            if (vowels.find_first_of(word[0]) != string::npos)
+                oss << ' ' << word << "ma" << a;
+            else
+                oss << ' ' << word.substr(1) << word[0] << "ma" << a;
         }
+        return oss.str().substr(1);
+    }
+    
+    
+    //804. Unique Morse Code Words
+    //https://leetcode.com/problems/unique-morse-code-words/description/
+    int lc804_uniqueMorseRepresentations(vector<string>& words) {
+        vector<string> morseVect = { ".-","-...","-.-.","-..",".","..-.","--.",
+                                     "....","..",".---","-.-",".-..","--","-.",
+                                     "---",".--.","--.-",".-.","...","-","..-",
+                                     "...-",".--","-..-","-.--","--.." };
+        set<string> morseSet;
+        for (auto& str : words)
+        {
+            string morseStr;
+            for (auto i : str)
+            {
+                morseStr += morseVect[i - 'a'];
+            }
+            if (!morseStr.empty())
+            {
+                morseSet.insert(morseStr);
+            }
+        }
+        return morseSet.size();
+    }
+    //811. Subdomain Visit Count
+    //https://leetcode.com/problems/subdomain-visit-count/description/
+    vector<string> lc811_subdomainVisits(vector<string>& cpdomains) {
+        unordered_map<string, int> m;
+        for (const auto& str : cpdomains)
+        {
+            int i = str.find(" ");
+            int num = stoi(str.substr(0, i));
+            string domain = str.substr(i + 1, str.size() - i - 1);
+            for (int n = domain.size() - 1; n >= 0; n--)
+            {
+                if (domain[n] == '.') m[domain.substr(n + 1, domain.size() - n - 1)] += num;
+                else if (n == 0) m[domain] += num;
+            }
 
-        if (level == 0)
-        {
-            num++;
-            avg = (avg + pRoot->val);
-            return 1;
         }
-        return TreeNodeAtLevel(pRoot->left, level - 1, avg, num) + TreeNodeAtLevel(pRoot->right, level - 1, avg, num);
+        vector<string> v;
+        for (const auto& e : m) v.push_back(to_string(e.second) + " " + e.first);
+        return v;
     }
 
-    vector<double> averageOfLevels(TreeNode* root) {
-        vector<double> ret;
-        for (int i = 0;; i++)
+    //821. Shortest Distance to a Character
+    //https://leetcode.com/problems/shortest-distance-to-a-character/description/
+    vector<int> lc821_shortestToChar(string S, char C) {
+        vector<int> ret;
+        for (int i = 0; i < S.size(); i++)
         {
-            double avg = 0;
-            int num = 0;
-            if (!TreeNodeAtLevel(root, i, avg, num))
-            {
-                break;
-            }
-            else {
-                ret.push_back(avg/num);
-            }
+            int index = lc821_nearestIndex(S, C, i);
+            ret.push_back(abs(i - index));
         }
         return ret;
     }
-
-    //107. Binary Tree Level Order Traversal II
-    //https://leetcode.com/problems/binary-tree-level-order-traversal-ii/description/
-    int TreeNodeAtLevel(TreeNode* pRoot, int level, vector<int>& levelContent)
-    {
-        if (!pRoot || level < 0)
+    int lc821_nearestIndex(string S, char C, int index) {
+        int left = index, right = index;
+        if (S[index] == C) return index;
+        while (left >= 0 || right < S.size())
         {
-            return 0;
+            if (left >= 0 && S[left] == C) { return left; }
+            if (right < S.size() && S[right] == C) { return right; }
+            left--;
+            right++;
         }
-
-        if (level == 0)
-        {
-            levelContent.push_back(pRoot->val);
-            return 1;
-        }
-        return TreeNodeAtLevel(pRoot->left, level - 1, levelContent) + TreeNodeAtLevel(pRoot->right, level - 1, levelContent);
-    }
-
-    vector<vector<int>> levelOrderBottom(TreeNode* root) {
-        vector<vector<int>> ret;
-        for (int i; ; i++)
-        {
-            vector<int> levelContent;
-            if (!TreeNodeAtLevel(root, i, levelContent))
-            {
-                break;
-            }
-            ret.push_back(levelContent);
-        }
-
-        reverse(ret.begin(), ret.end());
-        return ret;
-    }
-
-    //693. Binary Number with Alternating Bits
-    //https://leetcode.com/problems/binary-number-with-alternating-bits/description/
-    bool hasAlternatingBits(int n) {
-        return !((n - (n >> 2))&(n - (n >> 2) - 1));
+        return -1;
     }
 
     //832. Flipping an Image
     //https://leetcode.com/problems/flipping-an-image/description/
-    vector<vector<int>> flipAndInvertImage(vector<vector<int>>& A) {
+    vector<vector<int>> lc832_flipAndInvertImage(vector<vector<int>>& A) {
         vector<vector<int>> res;
         for (auto& vects : A)
         {
@@ -1439,47 +1507,6 @@ namespace ListNameSpace {
         return head;
 
     }
-    //771. Jewels and Stones
-    //https://leetcode.com/problems/jewels-and-stones/description/
-    int numJewelsInStones(string J, string S) {
-        set<char> JewelsSet;
-        for (auto j : J)
-            JewelsSet.insert(j);
-        int num = 0;
-        for (auto s : S)
-        {
-            if (JewelsSet.find(s) != JewelsSet.end())
-            {
-                num++;
-            }
-
-        }
-        return num;
-    }
-
-    //804. Unique Morse Code Words
-    //https://leetcode.com/problems/unique-morse-code-words/description/
-    int uniqueMorseRepresentations(vector<string>& words) {
-        vector<string> morseVect = { ".-","-...","-.-.","-..",".","..-.","--.",
-                                     "....","..",".---","-.-",".-..","--","-.",
-                                     "---",".--.","--.-",".-.","...","-","..-",
-                                     "...-",".--","-..-","-.--","--.." };
-        set<string> morseSet;
-        for (auto& str : words)
-        {
-            string morseStr;
-            for (auto i : str)
-            {
-                morseStr += morseVect[i - 'a'];
-            }
-            if (!morseStr.empty())
-            {
-                morseSet.insert(morseStr);
-            }
-        }
-        return morseSet.size();
-    }
-
 }
 
 #include<stdio.h> //printf()

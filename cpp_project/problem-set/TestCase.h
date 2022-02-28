@@ -33,7 +33,7 @@ namespace TestCase {
     void islandPerimeterUT(){
         Solution ps;
         vector<vector<int>> input{ {0, 1, 0, 0},{1, 1, 1, 0},{0, 1, 0, 0 },{1, 1, 0, 0} };
-        int ret = ps.islandPerimeter(input);
+        int ret = ps.lc463_islandPerimeter(input);
         cout << ret << endl;
     }
 
@@ -47,17 +47,18 @@ namespace TestCase {
         ms.push(1);
         cout << ms.min() << endl;
     }
+    
     void zStringTransUT(){
         Solution ps;
         string caseStr = "abc";
-        auto ret = ps.convert_6(caseStr, 1);
+        auto ret = ps.lc6_convert_6(caseStr, 1);
         cout << ret << endl;
     }
 
     void longestConsecutiveUT(){
         Solution ps;
         vector<int> test{ 9,1,-3,2,4,8,3,-1,6,-2,-4,7 };
-        int ret = ps.longestConsecutive(test);
+        int ret = ps.lc124_longestConsecutive(test);
         cout << ret << endl;
     }
 
@@ -65,7 +66,7 @@ namespace TestCase {
         Solution ps;
         vector<int> t2{3,2,1 };
 
-        vector<int> ret = ps.getLeastNumbers(t2, 2);
+        vector<int> ret = ps.lc40_getLeastNumbers(t2, 2);
         for (auto& it : ret)
         {
             cout << it <<"\t";
@@ -75,11 +76,11 @@ namespace TestCase {
 
     void romanToIntUT() {
         Solution ps;
-        cout << "III" << "\t" << "3" << "\t" << ps.romanToInt("III") << std::endl;
-        cout << "IV" << "\t" << "4" << "\t" << ps.romanToInt("IV") << std::endl;
-        cout << "IX" << "\t" << "9" << "\t" << ps.romanToInt("IX") << std::endl;
-        cout << "LVIII" << "\t" << "58" << "\t" << ps.romanToInt("LVIII") << std::endl;
-        cout << "MCMXCIV" << "\t" << "1994" << "\t" << ps.romanToInt("MCMXCIV") << std::endl;
+        cout << "III" << "\t" << "3" << "\t" << ps.lc13_romanToInt("III") << std::endl;
+        cout << "IV" << "\t" << "4" << "\t" << ps.lc13_romanToInt("IV") << std::endl;
+        cout << "IX" << "\t" << "9" << "\t" << ps.lc13_romanToInt("IX") << std::endl;
+        cout << "LVIII" << "\t" << "58" << "\t" << ps.lc13_romanToInt("LVIII") << std::endl;
+        cout << "MCMXCIV" << "\t" << "1994" << "\t" << ps.lc13_romanToInt("MCMXCIV") << std::endl;
     }
 
     void nextGreaterElementUT(){
@@ -87,31 +88,34 @@ namespace TestCase {
         vector<int> t1{ 4,1,2 };
         vector<int> t2{ 1, 3, 4, 2 };
 
-        vector<int> ret = ps.nextGreaterElement(t1, t2);
+        vector<int> ret = ps.lc496_nextGreaterElement(t1, t2);
         for (auto& it : ret)
         {
             cout << it <<"\t";
         }
     }
+
     void numberOfLinesUT(){
         Solution ps;
         vector<int> t1{ 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
         string s = "abcdefghijklmnopqrstuvwxyz";
-        vector<int> ret = ps.numberOfLines(t1,s);
+        vector<int> ret = ps.lc806_numberOfLines(t1,s);
         for (auto& it : ret)
         {
             cout << it <<"\t";
         }
     }
+
     void hasAlternatingBitsUT(){
         Solution ps;
-        bool ret = ps.hasAlternatingBits(8);
+        bool ret = ps.lc693_hasAlternatingBits(8);
         cout << ret << "\t";
     }
+
     void flipAndInvertImageUT(){
         Solution ps;
         vector<vector<int>> input = { {1, 1, 0},{1, 0, 1},{0, 0, 0} };
-        auto res = ps.flipAndInvertImage(input);
+        auto res = ps.lc832_flipAndInvertImage(input);
         for_each(res.begin(), res.end(), [](vector<int>& tmp){
             for (auto& it : tmp)
             {
@@ -120,18 +124,20 @@ namespace TestCase {
         }
         );
     }
-       void longestCommonPrefixUT(){
+
+    void longestCommonPrefixUT(){
         Solution ps;
         vector<vector<string>> input = { {"flower","flow","flight"},
         {"dog","racecar","car"} };
         for_each(input.begin(), input.end(), [&ps](vector<string>& tmp){
-            auto res = ps.longestCommonPrefix(tmp);
+            auto res = ps.lc14_longestCommonPrefix(tmp);
             {
                 cout << res << endl;
             }
         }
         );
     }
+
     void plusOneUT(){
         Solution ps;
         vector<vector<int>> input = { 
@@ -139,7 +145,7 @@ namespace TestCase {
         // {9},
         {8,9,9,9} };
         for_each(input.begin(), input.end(), [&ps](vector<int>& tmp){
-            auto res = ps.plusOne(tmp);
+            auto res = ps.lc66_plusOne(tmp);
             {
                 for (auto& it : res)
                 {
@@ -151,6 +157,7 @@ namespace TestCase {
         }
         );
     }
+
     void addBinaryUT(){
         Solution ps;
         vector<vector<string>> input = { 
@@ -159,7 +166,7 @@ namespace TestCase {
         {"1010","1011"},
         };
         for_each(input.begin(), input.end(), [&ps](vector<string>& tmp){
-            auto res = ps.addBinary(tmp[0], tmp[1]);
+            auto res = ps.lc67_addBinary(tmp[0], tmp[1]);
             {
                 cout << res << endl;
              
@@ -167,15 +174,17 @@ namespace TestCase {
             }
         );
     }
+
     void mySqrtUT(){
         Solution ps;
         vector<int> input = {4, 8};
         for_each(input.begin(), input.end(), [&ps](int tmp){
-            auto res = ps.mySqrt(tmp);
+            auto res = ps.lc69_mySqrt(tmp);
             cout << tmp << "\t" << res << endl;
             }
         );
     }
+
     void mergeUT(){
         Solution ps;
         vector<vector<int>> input = { 
@@ -185,19 +194,24 @@ namespace TestCase {
         {1}
         };
         
-        ps.merge(input[0], 1, input[1], 1);
+        ps.lc88_merge(input[0], 1, input[1], 1);
         for (size_t i = 0; i < input.size(); i++)
         {
             cout << input[0][i] << "\t";
         }
-        cout << endl;
-            
-        
+        cout << endl;    
+    }
+
+    void mylengthOfLIS(){
+        Solution ps;
+        vector<int> input = {1,7,3,5,9,4,8};
+        auto res = ps.lc300_lengthOfLIS(input);
+        cout << "\t" << res << endl;
     }
 
     void generateUT(){
         Solution ps;
-        auto ret = ps.generate(5);
+        auto ret = ps.lc118_generate(5);
         for (int i = 0; i < ret.size(); i++)
         {
             for (int j = 0; j < ret[i].size(); j++) {
@@ -209,7 +223,7 @@ namespace TestCase {
     void isPalindromeUT(){
         Solution ps;
         string input = "0P";
-        auto ret = ps.isPalindrome(input);
+        auto ret = ps.lc125_isPalindrome(input);
         std::cout << ret << "\t" << std::endl;
     }
     
