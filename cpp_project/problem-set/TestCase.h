@@ -194,6 +194,25 @@ namespace TestCase {
             
         
     }
+
+    void generateUT(){
+        Solution ps;
+        auto ret = ps.generate(5);
+        for (int i = 0; i < ret.size(); i++)
+        {
+            for (int j = 0; j < ret[i].size(); j++) {
+                std::cout << ret[i][j] << "\t";
+            }
+            std::cout << std::endl;
+        }
+    }
+    void isPalindromeUT(){
+        Solution ps;
+        string input = "0P";
+        auto ret = ps.isPalindrome(input);
+        std::cout << ret << "\t" << std::endl;
+    }
+    
     void vecIterUT(){
         vector<int> input = { 1,2,3,4,5,6 };
 

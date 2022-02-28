@@ -949,6 +949,86 @@ public:
         hasPathSum(root->right, targetSum - root->val);
 
     }
+
+    /*
+    * @lc app=leetcode.cn id=118 lang=cpp
+    *
+    * [118] 杨辉三角
+    */
+    void generateTriangleDfs(vector<vector<int>>& ret, int level, int numRows) {
+        if (level > numRows) {
+            return;
+        }
+        for (int i = 0; i < level; i++)
+        {
+            if(i == 0 || i == level - 1) {
+                ret[level - 1].push_back(1);
+            } else {
+                ret[level - 1].push_back(ret[level - 2][i -1] + ret[level - 2][i]);
+            }
+        }
+        generateTriangleDfs(ret, level+1, numRows);
+    }
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>> ret(numRows, vector<int>());
+        generateTriangleDfs(ret, 1, numRows);
+        return ret;
+    }
+
+    /*
+    * @lc app=leetcode.cn id=121 lang=cpp
+    *
+    * [121] 买卖股票的最佳时机
+    */
+    int maxProfit(vector<int>& prices) {
+        if (prices.size() <= 1) return 0;
+        int minP = prices[0];
+        int maxP = 0;
+        for (size_t i = 0; i < prices.size(); i++)
+        {
+            maxP = max(maxP, prices[i] - minP);
+            minP = min(minP, prices[i]);
+
+        }
+        return maxP;
+    }
+
+    /*
+    * @lc app=leetcode.cn id=125 lang=cpp
+    *
+    * [125] 验证回文串
+    */
+    bool isPalindrome(string s) {
+        for (int i = 0; i< s.size(); i++) {
+            s[i] = tolower(s[i]);
+        }
+        int r = s.size() - 1;
+        int l = 0;
+        while (l < r)
+        {
+            bool lok = false;
+            if ((s[l] >= '0' && s[l] <= '9') || (s[l] >= 'a' && s[l] <= 'z')) {
+                lok = true;
+            } else {
+                l++;
+                continue;
+            }
+            bool rok = false;
+            if ((s[l] >= '0' && s[l] <= '9') || (s[r] >= 'a' && s[r] <= 'z')) {
+                rok = true;
+            } else {
+                r--;
+                continue;
+            }
+            if (lok && rok) {
+                if (s[l] != s[r]) return false;
+                l++;
+                r--;
+                continue;
+            }
+        }
+        return true;
+    }
     //463. Island Perimeter
     //https://leetcode.com/problems/island-perimeter/description/
     int islandPerimeter(vector<vector<int>>& grid) {
