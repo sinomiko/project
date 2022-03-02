@@ -26,10 +26,15 @@ KMP算法
 最短路径,欧拉回路,图着色,求凸包,双向搜索，迭代加深度搜索
 */
 
+/* be careful
+no size_t; use int
+return value bool vs int;
+*/
+
 int main(int argc, char* argv[]) {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */
 
-    TestCase::mylengthOfLIS();
+    TestCase::lc5_longestPalindromeUT();
 
     return 0;
 }

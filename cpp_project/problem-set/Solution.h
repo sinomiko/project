@@ -56,10 +56,48 @@ public:
     * [5] 最长回文子串
     */
     string lc5_longestPalindrome(string s) {
-        if (s.size() <= 1) {
-            return "";
+        int left = 0;
+        int right = 0;
+        int maxLen = 0;
+        for (size_t i = 0; i < s.size(); i++)
+        {
+            lc5_longestPalindromeExtend(s, i, i, s.size(), left, right, maxLen);
+            lc5_longestPalindromeExtend(s, i, i + 1, s.size(), left, right, maxLen);
         }
+        return s.substr(left, maxLen);
         
+    }
+    void lc5_longestPalindromeExtend(const string& s, int i, int j, int len, 
+    int& l, int& r, int& maxLen) {
+        while(i >= 0 && j < len && s[i] == s[j]) {
+            if (j - i + 1 > maxLen) {
+                l = i;
+                r = j;
+                maxLen = j - i + 1;
+            }
+            i--;
+            j++;
+        }
+    }
+
+    string lc5_longestPalindrome2(string s) {
+
+        vector<vector<int>> dp(s.size(), vector<int>(s.size(), 0));
+        int l = 0, r = 0, maxLen = 0;
+        for (int i = s.size() - 1; i >= 0; i--)
+        {
+            for(int j = i; j < s.size(); j++) {
+                if(s[i] == s[j] && (j - i <= 1 || dp[i+1][j-1])) {
+                    dp[i][j] = 1;
+                }
+                if (dp[i][j] && j - i + 1 > maxLen) {
+                    l = i;
+                    r = j;
+                    maxLen = j - i +1;
+                }
+            }
+        }
+        return s.substr(l, maxLen);
     }
     //leetcode-6 Z 字形变换
     string lc6_convert_6(string s, int numRows) {
@@ -318,8 +356,8 @@ public:
         for (size_t i = 0; i < nums.size(); i++)
         {
            if (nums[i] != val) {
-               new_idx++;
                nums[new_idx] = nums[i];
+               new_idx++;
            }
         }
         return new_idx;
@@ -835,6 +873,7 @@ public:
         }
         int ans = 1;
         vector<int> dp(nums.size(), 1);
+
         for (int i = 1; i< nums.size(); i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[i] > nums[j]) {
@@ -1156,6 +1195,60 @@ public:
         root->right = lc669_trimBST(root->right, L, R);
 
         return root;
+    }
+    /*
+    * @lc app=leetcode.cn id=673 lang=cpp
+    *
+    * [673] 最长递增子序列的个数
+    */
+    int lc673_findNumberOfLIS(vector<int>& nums) {
+        if (nums.size() <= 1) {
+            return nums.size();
+        }
+        int ans = 1;
+        vector<int> dp(nums.size(), 1);
+        vector<int> count(nums.size(), 1);
+        for (int i = 1; i < nums.size(); i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+                if (nums[i] > nums[j])
+                {
+                    if (dp[j] + 1 > dp[i]) {
+                        dp[i] = dp[j] + 1;
+                        count[i] = count[j];
+                    } else if (dp[j] + 1 == dp[i]) {
+                        count[i] += count[j];
+                    }
+                }
+                ans = max(ans, dp[i]);
+            }
+
+        }
+        int result = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (ans == dp[i]) result += count[i];
+        }
+        return result;
+    }
+
+    /*
+    * @lc app=leetcode.cn id=674 lang=cpp
+    *
+    * [674] 最长连续递增序列
+    */
+    int lc674_findLengthOfLCIS(vector<int>& nums) {
+        int maxLen = 1;
+        vector<int> dp(nums.size(), 1);
+        for (int i = 0; i < nums.size() - 1; i++)
+        {
+            if (nums[i+1] > nums[i]) dp[i+1] = max(dp[i+1], dp[i] +1);
+            if(dp[i+1] > maxLen) {
+                maxLen= dp[i+1];
+            }
+        }
+        return maxLen;
+        
     }
     //682. Baseball Game
     //https://leetcode.com/problems/baseball-game/description/

@@ -55,6 +55,14 @@ namespace TestCase {
         cout << ret << endl;
     }
 
+    void lc5_longestPalindromeUT(){
+        Solution ps;
+        string caseStr = "babad";
+        auto ret = ps.lc5_longestPalindrome2(caseStr);
+        cout << ret << endl;
+    }
+    
+
     void longestConsecutiveUT(){
         Solution ps;
         vector<int> test{ 9,1,-3,2,4,8,3,-1,6,-2,-4,7 };
