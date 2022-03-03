@@ -62,7 +62,13 @@ namespace TestCase {
         cout << ret << endl;
     }
     
-
+    void lc53_maxSubArrayUT(){
+        Solution ps;
+        vector<int> test{5,4,-1,7,8};
+        auto ret = ps.lc53_maxSubArray(test);
+        cout << ret << endl;
+    }
+    
     void longestConsecutiveUT(){
         Solution ps;
         vector<int> test{ 9,1,-3,2,4,8,3,-1,6,-2,-4,7 };
@@ -74,12 +80,17 @@ namespace TestCase {
         Solution ps;
         vector<int> t2{3,2,1 };
 
-        vector<int> ret = ps.lc40_getLeastNumbers(t2, 2);
+        vector<int> ret = ps.lc_offer_40_getLeastNumbers(t2, 2);
         for (auto& it : ret)
         {
             cout << it <<"\t";
         }
         
+    }
+
+    void lc22_generateParenthesisUT() {
+        Solution ps;
+        ps.lc22_generateParenthesis(2);
     }
 
     void romanToIntUT() {

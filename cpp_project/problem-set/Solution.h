@@ -124,9 +124,89 @@ public:
         }
         return ret;
     }
+    /*
+    * @lc app=leetcode.cn id=20 lang=cpp
+    *
+    * [20] 有效的括号
+    */
+    bool ls20_isValid(string s) {
+        if (s.size() % 2) {
+            return false;
+        }
+        unordered_map<char, char> pairs = {
+            {'}', '{'},
+            {']', '['},
+            {')', '('},
+        };
+        stack<char> ret;
+        for (char c : s) {
+            if (pairs.count(c)) {
+                if(ret.empty() || ret.top() != pairs[c]) {
+                    return false;
+                } else {
+                    ret.pop();
+                }
+            } else {
+                ret.push(c);
+            }
+        }
+        return ret.empty();
+    }
 
+    /*
+    * @lc app=leetcode.cn id=22 lang=cpp
+    *
+    * [22] 括号生成
+    */
+    void lc22_bt(vector<string>& ret, string& cur, int open, int close, int n) {
+        if (cur.size() == 2*n) {
+            ret.push_back(cur);
+        }
+        if (open < n) {
+            cur.push_back('(');
+            lc22_bt(ret, cur, open + 1, close, n);
+            cur.pop_back();
+        }
+        if (close < open) {
+            cur.push_back(')');
+            lc22_bt(ret, cur, open, close+1, n);
+            cur.pop_back();
+        }
+    }
+    vector<string> lc22_generateParenthesis(int n) {
+        vector<string> ret;
+        string current;
+        lc22_bt(ret, current, 0, 0, n);
+        return ret;
+    }
+
+    /*
+    * @lc app=leetcode.cn id=32 lang=cpp
+    *
+    * [32] 最长有效括号
+    */
+    int longestValidParentheses(string s) {
+        int maxLen = 0;
+        stack<int> stk;
+        stk.push(-1);
+        for (int i = 0; i < s.size(); i++) {
+            if(s[i] == '(') {
+                stk.push(i);
+            } else {
+                stk.pop();
+                if (stk.empty()) {
+                    stk.push(i); 
+                } else {
+                    maxLen = max(maxLen, i - stk.top());
+                }
+            }
+        }
+        return maxLen;
+        
+
+    }
     //offer 40
-    vector<int> lc40_getLeastNumbers(vector<int>& arr, int k) {
+    vector<int> lc_offer_40_getLeastNumbers(vector<int>& arr, int k) {
         vector<int> res(k, 0);
         if (k == 0) {
             return res;
@@ -363,6 +443,25 @@ public:
         return new_idx;
         
         
+    }
+    /*
+    * @lc app=leetcode.cn id=53 lang=cpp
+    *
+    * [53] 最大子数组和
+    */
+    int lc53_maxSubArray(vector<int>& nums) {
+        vector<int> dp(nums.size(), 0);
+        int ans = nums[0];
+        int sum  = 0;
+        for (int i = 1; i < nums.size(); i++) {
+            if (sum + nums[i]  > 0) {
+                sum = sum + nums[i];
+            } else {
+                sum = nums[i];
+            }
+            ans = max(ans, sum);
+        }  
+        return ans;
     }
     /*
     * @lc app=leetcode.cn id=58 lang=cpp
