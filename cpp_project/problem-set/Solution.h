@@ -876,8 +876,27 @@ public:
         }
         return maxP;
     }
+    //128. 最长连续序列
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> num_set;
+        for (const int& num : nums) {
+            num_set.insert(num);
+        }
+        int longestStreak = 0;
+        for (const int& num : num_set) {
+            if (!num_set.count(num - 1)) {
+                int currentNum = num;
+                int currentStreak = 1;
 
-   
+                while (num_set.count(currentNum + 1)) {
+                    currentNum += 1;
+                    currentStreak += 1;
+                }
+                longestStreak = max(longestStreak, currentStreak);
+            }
+        }
+        return longestStreak;
+    }
     /**
     * @param num: A list of integers
     * @return: An integer
@@ -1645,6 +1664,33 @@ public:
     *       res.append(right.pop(0))
     *   return res
     */
+    // 剑指 Offer II 085. 生成匹配的括号
+    // 正整数 n 代表生成括号的对数，请设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+    void generateParenthesisBT(int n, int l, int r, string& str, vector<string>& ret) {
+        if (r > l|| l > n) {
+            return;
+        }
+        if (str.size() == 2 * n) {
+            ret.push_back(str);
+            return;
+        }
+        if (l < n) {
+            str.push_back('(');
+            generateParenthesisBT(n, l + 1, r, str, ret);
+            str.pop_back();
+        }
+        if (r < l) {
+            str.push_back(')');
+            generateParenthesisBT(n, l, r + 1, str, ret);
+            str.pop_back();
+        }
+    }
+    vector<string> generateParenthesis(int n) {
+        vector<string> ret;
+        string str;
+        generateParenthesisBT(n, 0, 0, str, ret);
+        return ret;
+    }
 };
 
 namespace ListNameSpace {
