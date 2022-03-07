@@ -399,7 +399,7 @@ public:
     *
     * [32] 最长有效括号
     */
-    int longestValidParentheses(string s) {
+    int lc32_longestValidParentheses(string s) {
         int maxLen = 0;
         stack<int> stk;
         stk.push(-1);
@@ -416,8 +416,6 @@ public:
             }
         }
         return maxLen;
-        
-
     }
     //offer 40
     vector<int> lc_offer_40_getLeastNumbers(vector<int>& arr, int k) {
@@ -444,7 +442,36 @@ public:
         return res;
 
     }
+    /*
+    * @lc app=leetcode.cn id=42 lang=cpp
+    * 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+    * [42] 接雨水
+    */
+    int lc42_trap(vector<int>& height) {
+        if (height.size() < 2) {
+            return 0;
+        }
+        int lMax = height[0], rMax = height[height.size() - 1];
+        int l = 0, r = height.size() - 1;
+        int sum = 0;
 
+        while (l < r) {
+            if (lMax < height[l]) {
+                lMax = height[l];
+            }
+            if (rMax <  height[r]) {
+                rMax = height[r];
+            }
+            if (height[l] < height[r]) {
+                sum += lMax - height[l];
+                ++l;
+            } else {
+                sum += rMax - height[r];
+                --r;
+            }
+        }
+        return sum;
+    }
     /*
     * @lc app=leetcode.cn id=53 lang=cpp
     *

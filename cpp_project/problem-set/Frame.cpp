@@ -34,7 +34,7 @@ return value bool vs int;
 int main(int argc, char* argv[]) {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */
 
-    TestCase::TestMallocUT();
+    TestCase::lc42_trapUT();
 
     return 0;
 }

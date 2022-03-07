@@ -281,6 +281,12 @@ namespace TestCase {
         delete p2;
         delete p3;
     }
+    void lc42_trapUT(){
+        Solution ps;
+        vector<int> t1{0,1,0,2,1,0,1,3,2,1,2,1};
+        auto ret = ps.lc42_trap(t1);
+        cout << ret <<"\t"; 
+    }
 }
 
 #endif //PROBLEM_SET_TESTCASE_H
