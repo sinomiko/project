@@ -287,6 +287,20 @@ namespace TestCase {
         auto ret = ps.lc42_trap(t1);
         cout << ret <<"\t"; 
     }
+    void lc240_searchMatrixUT(){
+        Solution ps;
+        vector<vector<int>> matrix  {{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
+        int target = 5;
+
+        auto ret = ps.lc240_searchMatrix(matrix, target);
+        cout << ret <<"\t"; 
+    }
+    void lc105_buildTreeUT(){
+        Solution ps;
+        vector<int> pre{3,9,20,15,7};
+        vector<int> in{9,3,15,20,7};
+        auto ret = ps.lc105_buildTree(pre, in);
+    }
 }
 
 #endif //PROBLEM_SET_TESTCASE_H

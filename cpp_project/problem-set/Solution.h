@@ -759,8 +759,30 @@ public:
         return lc101_isMirror(root, root);
     }
 
-
-
+    /*
+    * @lc app=leetcode.cn id=105 lang=cpp
+    *
+    * [105] 从前序与中序遍历序列构造二叉树
+    */
+    TreeNode* lc105_rebuildTree(vector<int>& preorder, int pl, int pr, 
+    vector<int>& inorder, int il, int ir) {
+        if (pl > pr || il > ir) {
+            return nullptr;
+        }
+        TreeNode* root = new TreeNode(preorder[pl]);
+        // split inorder [il, i) i [i+1, ir)
+        int i = il;
+        while(i < ir && inorder[i] != preorder[pl]) {
+            i++;
+        }
+        int interval = i - il;
+        root->left = lc105_rebuildTree(preorder, pl + 1, pl + interval, inorder, il, i + interval - 1);
+        root->right = lc105_rebuildTree(preorder, pl + interval + 1, pr, inorder, il + interval + 1, ir);
+        return root;
+    }
+    TreeNode* lc105_buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return lc105_rebuildTree(preorder, 0, preorder.size() - 1, inorder, 0, inorder.size() - 1);
+    }
     //107. Binary Tree Level Order Traversal II
     //https://leetcode.com/problems/binary-tree-level-order-traversal-ii/description/
     int lc107_TreeNodeAtLevel(TreeNode* pRoot, int level, vector<int>& levelContent)
@@ -1007,7 +1029,31 @@ public:
         }
         return true;
     }
+    /*
+    * @lc app=leetcode.cn id=240 lang=cpp
+    *
+    * [240] 搜索二维矩阵 II
+    */
+    bool searchMatrixDfs(vector<vector<int>>& matrix, int target, int b, int r, int t, int l) {
+        if (t >= 0 && l <= r) {
+            if (matrix[t][l] == target) {
+                return true;
+            } else if (matrix[t][l] < target) {
+                return searchMatrixDfs(matrix, target, b, r, t, ++l);
+            } else {
+                return searchMatrixDfs(matrix, target, b, r, --t, l);
+            }
+        }
+        return false;
+    }
 
+    bool lc240_searchMatrix(vector<vector<int>>& matrix, int target) {
+        if (matrix.empty() || matrix[0].empty() ) {
+            return false;
+        }
+        int m = matrix.size() - 1, n = matrix.size() - 1;
+        return searchMatrixDfs(matrix, target, m, n, m, 0);
+    }
     /*
     * @lc app=leetcode.cn id=300 lang=cpp
     *
