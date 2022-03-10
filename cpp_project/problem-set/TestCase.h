@@ -300,7 +300,14 @@ namespace TestCase {
         vector<int> pre{3,9,20,15,7};
         vector<int> in{9,3,15,20,7};
         auto ret = ps.lc105_buildTree(pre, in);
+        cout << ret <<"\t"; 
     }
+    void lc168_convertToTitleUT(){
+        Solution ps;
+        auto ret = ps.lc168_convertToTitle(701);
+        cout << ret <<"\t"; 
+    }
+    
 }
 
 #endif //PROBLEM_SET_TESTCASE_H

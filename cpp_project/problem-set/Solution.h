@@ -417,6 +417,37 @@ public:
         }
         return maxLen;
     }
+    /*
+    * @lc app=leetcode.cn id=33 lang=cpp
+    *
+    * [33] 搜索旋转排序数组
+    */
+    int lc33_search(vector<int>& nums, int target) {
+        int l = 0, r = nums.size() - 1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            if (nums[mid] == nums[l] && nums[r] == nums[mid]) {
+                l++;
+                r--;
+            } else if (nums[l] <= nums[mid]) {
+                if (nums[mid] > target && nums[l] <= target) {
+                    r = mid -1;
+                } else {
+                    l = mid + 1;
+                }
+            } else {
+                if (nums[mid] < target && nums[r] >= target) {
+                    l = mid + 1;
+                } else {
+                    r = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
     //offer 40
     vector<int> lc_offer_40_getLeastNumbers(vector<int>& arr, int k) {
         vector<int> res(k, 0);
@@ -1054,6 +1085,35 @@ public:
         }
         return true;
     }
+    /*
+    * @lc app=leetcode.cn id=160 lang=cpp
+    *
+    * [160] 相交链表
+    */
+    ListNode* lc160_getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode* l = headA, *r = headB;
+        while (l != r) {
+            l = l ? l->next : headB;
+            r = r ? r->next : headA;
+        }
+        return l;
+    }
+
+    /*
+    * @lc app=leetcode.cn id=168 lang=cpp
+    *
+    * [168] Excel表列名称
+    */
+    string lc168_convertToTitle(int columnNumber) {
+        string ret;
+        while (columnNumber >= 1) {
+            ret.push_back(((columnNumber - 1) % 26) + 'A');
+            columnNumber = (columnNumber - 1) / 26;
+        }
+        std::reverse(ret.begin(), ret.end());
+        return ret;
+    }
+    
     /*
     * @lc app=leetcode.cn id=240 lang=cpp
     *
