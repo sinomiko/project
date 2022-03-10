@@ -783,6 +783,31 @@ public:
     TreeNode* lc105_buildTree(vector<int>& preorder, vector<int>& inorder) {
         return lc105_rebuildTree(preorder, 0, preorder.size() - 1, inorder, 0, inorder.size() - 1);
     }
+
+    /*
+    * @lc app=leetcode.cn id=106 lang=cpp
+    *
+    * [106] 从中序与后序遍历序列构造二叉树
+    */
+    TreeNode* lc106_rebuildTree(vector<int>& inorder, int il, int ir, 
+    vector<int>& postorder, int pl, int pr) {
+        if (pl > pr || il > ir) {
+            return nullptr;
+        }
+        TreeNode* root = new TreeNode(postorder[pr]);
+        // split inorder [il, i) i [i+1, ir)
+        int i = il;
+        while(i < ir && inorder[i] != postorder[pr]) {
+            i++;
+        }
+        int interval = i - il;
+        root->left = lc106_rebuildTree(inorder, il, i + interval - 1, postorder, pl, pl + interval - 1);
+        root->right = lc106_rebuildTree(inorder, il + interval + 1, ir, postorder, pl + interval, pr - 1);
+        return root;
+    }
+    TreeNode* lc106_buildTree(vector<int>& inorder, vector<int>& postorder) {
+        return lc106_rebuildTree(inorder, 0, inorder.size() - 1, postorder, 0, postorder.size() -1);
+    }
     //107. Binary Tree Level Order Traversal II
     //https://leetcode.com/problems/binary-tree-level-order-traversal-ii/description/
     int lc107_TreeNodeAtLevel(TreeNode* pRoot, int level, vector<int>& levelContent)
