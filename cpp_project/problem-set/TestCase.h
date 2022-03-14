@@ -307,7 +307,15 @@ namespace TestCase {
         auto ret = ps.lc168_convertToTitle(701);
         cout << ret <<"\t"; 
     }
-    
+    void heapifySortUT() {
+        Solution ps;
+        vector<int> t1{ 4, 10, 3, 5, 1, 2 };
+        ps.HeapSort(t1);
+        for (auto& it : t1)
+        {
+            cout << it << "\t";
+        }
+    }
 }
 
 #endif //PROBLEM_SET_TESTCASE_H

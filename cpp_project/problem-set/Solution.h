@@ -1844,6 +1844,41 @@ public:
             str.pop_back();
         }
     }
+    void Heapify(vector<int>& val, int n, int i) {
+        if (i >= n) return;
+        //int parent = (i - 1) / 2;
+        int childrenL = 2 * i + 1;
+        int childrenR = 2 * i + 2;
+        int max = i;
+        if (childrenL < n && val[childrenL] > val[max]) {
+            max = childrenL;
+        }
+        if (childrenR < n && val[childrenR] > val[max]) {
+            max = childrenR;
+        }
+        if (max != i) {
+            std::swap(val[i], val[max]);
+            Heapify(val, n, max);
+        }
+    }
+    void buildHeap(vector<int>& val, int n) {
+        int last_node = n - 1;
+        int parent = (last_node - 1) / 2;
+        for (int i = parent; i >= 0;  i--)
+        {
+            Heapify(val, n, i);
+        }
+    }
+    void HeapSort(vector<int>& val) {
+        buildHeap(val, val.size());
+        for (size_t i = val.size() - 1; i > 0; i--) {
+            //交换
+            std::swap(val[i], val[0]);
+            //交换后砍断， i逐渐减小
+            Heapify(val, i, 0);
+        }
+
+    }
     vector<string> generateParenthesis(int n) {
         vector<string> ret;
         string str;
