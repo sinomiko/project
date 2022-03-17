@@ -1801,6 +1801,31 @@ public:
         quick_sort(vec, l, first - 1);
         quick_sort(vec, first + 1, r);
     }
+    
+    int upper_bound(int v, vector<int>& a) {
+        int l = 0, r = a.size() - 1;
+        bool equal = false;
+        while (l <= r) {
+            int mid = l + (r-l)/2;
+            if (equal) {
+                r = r - 1;
+                if (a[r] < v) {
+                    return r + 1;
+                }
+                continue;
+            }
+
+            if (a[mid] == v) {
+                equal = true;
+                continue;
+            } else if (a[mid] < v) {
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return l + 1;
+    }
     /*
     *
     * def MergeSort(array):
