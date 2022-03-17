@@ -1872,9 +1872,10 @@ public:
     void HeapSort(vector<int>& val) {
         buildHeap(val, val.size());
         for (size_t i = val.size() - 1; i > 0; i--) {
-            //交换
+            // 交换
             std::swap(val[i], val[0]);
-            //交换后砍断， i逐渐减小
+            // 交换后砍断， i逐渐减小
+            // val[0]下沉操作
             Heapify(val, i, 0);
         }
 
@@ -1989,5 +1990,74 @@ namespace FloatParse{
         int res = tail >> (23 - exp);              //求出有效数字
         return sign * res;                          //返回整数
     }
+};
+
+namespace heapDsa {
+    class Heap {
+    // https://www.cnblogs.com/hello-shf/p/11393655.html
+    public:
+        int GetLeftChild(int k) {
+            int lIdx = 2*k + 1;
+            return lIdx;
+
+        }
+
+        int GetRightChild(int k) {
+            int rIdx = 2*k + 2;
+            return rIdx;
+        }
+
+        int GetParent(int k) {
+            int parentIdx = (k -1) / 2;
+            return parentIdx;
+        }
+
+        void SiftUp(int k) {
+            int parent = GetParent(k);
+            while (k > 0 && parent > 0 && vals[k] > vals[parent]) {
+                std::swap(vals[k], vals[parent]);
+                k = GetParent(k);
+            }
+        }
+
+        void SiftDown(int k) {
+            int l = GetLeftChild(k);
+            while (l < vals.size()) {
+                int r = l + 1;
+                if (r < vals.size() && (vals[r] > vals[l])) {
+                    l = r;
+                }
+                if (vals[l] <= vals[k]) {
+                    break;
+                }
+                std::swap(vals[l], vals[k]);
+                k = l;
+                l = GetLeftChild(k);
+            }
+        }
+
+        int Replace(int v) {
+            int x = vals[0];
+            vals[0] = v;
+            SiftDown(0);
+            return x;
+        }
+
+        int Top() {
+            std::swap(vals[0], vals[vals.size() - 1]);
+            int x = vals.back();
+            vals.pop_back();
+            SiftDown(0);
+            return x;
+        }
+
+        void Add(int x) {
+            vals.push_back(x);
+            SiftUp(vals.size() -1);
+        }
+
+    private:
+        std::vector<int> vals;
+};
 };
 #endif //PROBLEM_SET_SOLUTION_H
