@@ -38,5 +38,6 @@ int main(int argc, char* argv[]) {
     // OJCases::testCore();
     // TestCase::lc169_majorityElementUT();
     // testSort
+    lookMem();
     return 0;
 }
