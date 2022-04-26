@@ -2,5 +2,11 @@ cmake_minimum_required(VERSION 3.20)
 project(problem_set)
 
 set(CMAKE_CXX_STANDARD 17)
-
+set(CMAKE_BUILD_TYPE DEBUG)
+set(CMAKE_C_FLAGS "-g -O0 -ggdb")
+set(CMAKE_C_FLAGS_DEBUG "-g -O0 -ggdb")
+set(CMAKE_C_FLAGS_RELEASE "-g -O0 -ggdb")
+set(CMAKE_CXX_FLAGS "-g -O0 -ggdb")
+set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -ggdb")
+set(CMAKE_CXX_FLAGS_RELEASE "-g -O0 -ggdb")
 add_executable(problem_set Frame.cpp QuickSort.cpp TPC.cpp Solution.h TestCase.h MallocTest.h)

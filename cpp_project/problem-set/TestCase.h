@@ -316,6 +316,13 @@ namespace TestCase {
             cout << it << "\t";
         }
     }
+
+    void lc169_majorityElementUT() {
+        Solution ps;
+        vector<int> t1{ 6,5,5};
+        auto it = ps.lc169_majorityElement(t1);
+        cout << it << "\n";
+    }
 }
 
 namespace OJCases{
@@ -359,6 +366,11 @@ namespace OJCases{
         ret = ps.upper_bound(6, in);
 
         cout << ret <<"\t";
+    }
+
+    void testCore() {
+        std::string s("abcd");
+        *reinterpret_cast<uint64_t*>(&s) = 0x11;
     }
 }
 #endif //PROBLEM_SET_TESTCASE_H

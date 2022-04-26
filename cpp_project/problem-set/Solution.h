@@ -93,7 +93,7 @@ public:
                 if (dp[i][j] && j - i + 1 > maxLen) {
                     l = i;
                     r = j;
-                    maxLen = j - i +1;
+                    maxLen = j - i + 1;
                 }
             }
         }
@@ -530,8 +530,7 @@ public:
     int lc58_lengthOfLastWord(string s) {
         int len = 0;
         int last_len = 0;
-        for (size_t i = 0; i < s.length(); i++)
-        {
+        for (size_t i = 0; i < s.length(); i++) {
             if (s[i] == ' ') {
                 if (len > 0) {
                     last_len = len;
@@ -1113,7 +1112,91 @@ public:
         std::reverse(ret.begin(), ret.end());
         return ret;
     }
-    
+
+    /*
+    * @lc app=leetcode.cn id=169 lang=cpp
+    *
+    * [169] 多数元素
+    */
+    int lc169_majorityElement(vector<int>& nums) {
+        if (nums.empty()) {
+            return 0;
+        }
+        int majorEle = nums.size() / 2;
+        unordered_map<int, int> counts;
+        for (auto it : nums)
+        {
+
+            counts[it] = counts.count(it) ? counts[it] + 1 : 1;
+            if (counts[it] > majorEle) return it;
+        }
+        return nums[0];
+    }
+
+    /*
+    * @lc app=leetcode.cn id=202 lang=cpp
+    *
+    * [202] 快乐数
+    */
+    int lc02_decompose(int n) {
+        int ret = 0;
+        while (n >= 1) {
+            ret += (n % 10) * (n % 10);
+            n = n / 10;
+        }
+        return ret;
+    }
+
+    bool lc02_isHappy(int n) {
+        if (n == 1) return true;
+        unordered_set<int> existVal;
+        while (n > 1)
+        {
+            if (existVal.count(n) > 0) {
+                return false;
+            } else {
+                existVal.insert(n);
+            }
+            n = lc02_decompose(n);
+        }
+        return n == 1;
+    }
+
+    /*
+    * @lc app=leetcode.cn id=203 lang=cpp
+    *
+    * [203] 移除链表元素
+    */
+    ListNode* lc203_removeElements(ListNode* head, int val) {
+        if (head == NULL) {
+            return head;
+        }
+        head->next = lc203_removeElements(head->next, val);
+        return head->val == val ? head->next : head;
+    }
+
+    /*
+    * @lc app=leetcode.cn id=205 lang=cpp
+    *
+    * [205] 同构字符串
+    */
+    // bool lc205_isIsomorphic(string s, string t) {
+    //     if (s.size() != t.size()) {
+    //         return false;
+    //     }
+    //     unordered_map<char, char> unordered_multimap;
+    //     for (int i = 0; i < s.size(); i++)
+    //     {
+    //         auto it = projections.find(s[i]);
+    //         if (it ==   .end()) {
+    //             projections[s[i]] = t[i];
+    //         } else {
+    //             if (it->second != t[i]) {
+
+    //             }
+    //         }
+    //     }
+    // }
     /*
     * @lc app=leetcode.cn id=240 lang=cpp
     *

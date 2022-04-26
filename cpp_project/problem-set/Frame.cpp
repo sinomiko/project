@@ -35,6 +35,8 @@ int main(int argc, char* argv[]) {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */
 
     // OJCases::upper_bound_UT();
-    TestCase::heapifySortUT();
+    // OJCases::testCore();
+    // TestCase::lc169_majorityElementUT();
+    // testSort
     return 0;
 }
