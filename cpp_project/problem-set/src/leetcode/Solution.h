@@ -2,8 +2,8 @@
 // Created by miko on 2021/12/13.
 //
 
-#ifndef PROBLEM_SET_SOLUTION_H
-#define PROBLEM_SET_SOLUTION_H
+#ifndef PROBLEM_SET_LEECODE_SOLUTION_H
+#define PROBLEM_SET_LEECODE_SOLUTION_H
 #include <map>
 #include <set>
 #include <list>
@@ -2168,4 +2168,5 @@ namespace heapDsa {
         std::vector<int> vals;
 };
 };
-#endif //PROBLEM_SET_SOLUTION_H
+
+#endif //PROBLEM_SET_LEECODE_SOLUTION_H

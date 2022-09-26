@@ -488,7 +488,7 @@ int action_process(Action action) {
   return result;
 }
 
-int main() {
+int TestMachingEngineGit() {
   /* Enter your code here. Read input from STDIN. Print output to STDOUT */
   
   string section;

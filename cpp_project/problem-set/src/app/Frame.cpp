@@ -1,4 +1,5 @@
 #include "TestCase.h"
+#include "view/util/IndexManager.h"
 using namespace std;
 
 /*
@@ -38,6 +39,7 @@ int main(int argc, char* argv[]) {
     // OJCases::testCore();
     // TestCase::lc169_majorityElementUT();
     // testSort
-    lookMem();
+    TestIndexSwitch();
+
     return 0;
 }

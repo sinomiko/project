@@ -1,0 +1,5 @@
+# add_subdirectory(leetcode)
+# add_subdirectory(test)
+# add_subdirectory(util)
+add_subdirectory(view)
+add_subdirectory(app)

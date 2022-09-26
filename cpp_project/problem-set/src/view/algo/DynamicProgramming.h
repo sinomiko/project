@@ -88,12 +88,3 @@ dp[i][j] =a[i][j] + min(dp[i-1][j]+ dp[i][j-1])
     cout<<dp2[3][3]<<endl;           //好像到这里又脑残了一次，真输出dp[4][4]了~  
  }
 
-int testDP()
-{  
-    fun(N);  
-    cout<<dp[15]<<endl;        //输出15阶的走法  
-	
-	ShortestDistance();
-    system("pause");  
-    return 0;  
-}  

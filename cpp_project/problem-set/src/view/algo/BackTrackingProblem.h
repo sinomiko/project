@@ -195,11 +195,12 @@ int findNthNumber(int a[], int b[], int n){
             return b[m];  
         }  
         else r = m - 1;  
-    }  
+    }
+    return 0;  
 }  
 
 //也可以取a[m]与b[n-m-2]中较大的一个，然后与a[m+1]和b[n-m-1]作比较，简化后的代码如下
-int findNthNumber(int a[], int b[], int n){  
+int findNthNumberV2(int a[], int b[], int n){  
     int l = 0, r = n -1;  
     int m, tmp;  
     while(l <= r){  
@@ -213,7 +214,8 @@ int findNthNumber(int a[], int b[], int n){
             l = m + 1;  
         }  
         else return tmp;  
-    }  
+    } 
+    return -1; 
 }  
 
 double getMedian(int arr1[], int arr2[], int n)
@@ -276,8 +278,8 @@ int find_median(int *A, int *B, int m, int n, int s, int t)
  *  
  *  
  */
- const int N = 8;//皇后的个数
-int positon[N];//存放皇后的位置
+const int N_QUEUE = 8;//皇后的个数
+int positon[N_QUEUE];//存放皇后的位置
 int solCount = 0;//记录有多少种摆法
 
               /*判断第row行放置的位置是否满足要求*/
@@ -293,33 +295,33 @@ bool valid(int row)
 }
 
 /*输出摆放结果*/
-void print()
-{
-    cout << "这是第" << ++solCount << "种摆法：" << '\n';
-    for (int i = 0; i < N; ++i)
-    {
-        for (int j = 0; j < N; ++j)
-        {
-            if (positon[i] == j)
-                cout << "⊙ ";
-            else
-                cout << "× ";
-        }
-        cout << '\n';
-    }
-    cout << endl;
-}
+// void print()
+// {
+//     cout << "这是第" << ++solCount << "种摆法：" << '\n';
+//     for (int i = 0; i < N; ++i)
+//     {
+//         for (int j = 0; j < N; ++j)
+//         {
+//             if (positon[i] == j)
+//                 cout << "⊙ ";
+//             else
+//                 cout << "× ";
+//         }
+//         cout << '\n';
+//     }
+//     cout << endl;
+// }
 
 /*回溯法搜索摆放位置*/
 void trail(int row = 0)
 {
     // 如果摆完完N行，则输出结果
-    if (N == row)
+    if (N_QUEUE == row)
     {
         print();
         return;
     }
-    for (int column = 0; column < N; ++column)
+    for (int column = 0; column < N_QUEUE; ++column)
     {
         positon[row] = column;// 放置在第row行第column列
                               // 如果满足条件，则进行下一行
@@ -356,24 +358,4 @@ void permute(char *str, int i, int n)
     }
 }
 
-int main()
-{
-	/*****八皇后********/
-	Queue(0);
-    /******查找中位数N*******/
-	int ar1[] = { 1, 12, 15, 26, 38 };
-    int ar2[] = { 2, 13, 17, 30, 45 };
 
-    int n1 = sizeof(ar1) / sizeof(ar1[0]);
-    int n2 = sizeof(ar2) / sizeof(ar2[0]);
-
-    printf("%d\n", find_median(ar1, ar2, n1, n2, 0, n1-1));
-	
-	/*****全排列********/
-	char str[] = "ABC";
-    int len = sizeof(str) / sizeof(char) - 2;
-    permute(str, 0, len);
-	
-    getchar();
-    return 0;
-}
