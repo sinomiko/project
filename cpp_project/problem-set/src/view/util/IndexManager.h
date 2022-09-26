@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 #include <iostream>
+#include <atomic>
 class IndexPartition
 {
 public:
@@ -32,19 +33,19 @@ class GlobalData
 {
 public:
     std::shared_ptr<IndexHolder> index_holder_ptr;
-    std::weak_ptr<IndexHolder> index_holder_wptr;
+    // std::weak_ptr<IndexHolder> index_holder_wptr;
 };
 
 GlobalData global_data;
 
-shared_ptr<IndexHolder> GetIndexHolderWptr() {
-    if (auto index_holder_ptr = global_data.index_holder_wptr.lock(); index_holder_ptr)
-    {
-        return index_holder_ptr;
-    }
+// shared_ptr<IndexHolder> GetIndexHolderWptr() {
+//     if (auto index_holder_ptr = global_data.index_holder_wptr.lock(); index_holder_ptr)
+//     {
+//         return index_holder_ptr;
+//     }
     
-    return nullptr;
-}
+//     return nullptr;
+// }
 
 void MockRpc(int idx)
 {
@@ -52,7 +53,9 @@ void MockRpc(int idx)
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
-        auto index_holder_ptr = GetIndexHolderWptr();
+        // auto index_holder_ptr = GetIndexHolderWptr();
+        std::weak_ptr<IndexHolder> index_holder_wptr = global_data.index_holder_ptr;
+        auto index_holder_ptr = index_holder_wptr.lock();
         if (!index_holder_ptr)
         {
             std::cout << "index_holder_ptr is nullptr" << std::endl;
@@ -78,7 +81,7 @@ std::atomic<int> g_index = 1;
 void SetData(int index) {
     global_data.index_holder_ptr = std::make_shared<IndexHolder>();
     global_data.index_holder_ptr->index_partition_ptr = std::make_shared<IndexPartition>(index);
-    global_data.index_holder_wptr = global_data.index_holder_ptr;
+    // global_data.index_holder_wptr = global_data.index_holder_ptr;
 }
 
 #endif //PROBLEM_SET_UTIL_INDEX_MANAGER_H
