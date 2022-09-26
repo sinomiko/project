@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <string>
-#include<vector>
+#include <vector>
 struct BeautifulSequence {
 public:
     BeautifulSequence() {
@@ -118,6 +118,7 @@ void get_input_and_run(){
     }
 
 }
+
 #include<stdio.h>
 #include<vector>
 int cal_tencent_win_probability() {

@@ -1,5 +1,0 @@
-# add_subdirectory(algo)
-# add_subdirectory(basic)
-# add_subdirectory(company)
-add_subdirectory(tpc)
-add_subdirectory(app)
