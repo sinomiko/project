@@ -73,3 +73,8 @@ output/
 null.d
 build_*
 debug_*
+
+bazel-bazel_demo
+bazel-bin
+bazel-out
+bazel-testlogs
